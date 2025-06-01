@@ -36,7 +36,6 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
           <span className="text-sm text-gray-500">{formatDate(review.date)}</span>
         </div>
         
-        <h5 className="font-medium text-slate-900 mb-2">{review.title}</h5>
         <p className="text-gray-600 text-sm leading-relaxed">{review.comment}</p>
       </CardContent>
     </Card>

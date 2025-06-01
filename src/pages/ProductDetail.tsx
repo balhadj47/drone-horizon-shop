@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, Check, Zap } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Check, Zap, Shield, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -45,6 +45,18 @@ const ProductDetail = () => {
     navigate('/checkout');
   };
 
+  // Determine warranty period based on category
+  const getWarrantyPeriod = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'racing':
+        return '12 months';
+      case 'professional':
+      case 'consumer':
+      default:
+        return '24 months';
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Button asChild variant="ghost" className="mb-6">
@@ -81,7 +93,7 @@ const ProductDetail = () => {
             </p>
           </div>
 
-          {/* Stock Status & Purchase Buttons */}
+          {/* Stock Status & Warranty Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               {product.inStock ? (
@@ -92,6 +104,31 @@ const ProductDetail = () => {
               ) : (
                 <Badge variant="destructive">Out of Stock</Badge>
               )}
+            </div>
+
+            {/* Warranty & Guarantee Info */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="h-5 w-5 text-blue-600" />
+                <span className="font-semibold text-blue-900">Warranty & Guarantee</span>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-blue-600" />
+                  <span className="text-blue-700">{getWarrantyPeriod(product.category)} manufacturer warranty</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-blue-600" />
+                  <span className="text-blue-700">30-day money-back guarantee</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-blue-600" />
+                  <span className="text-blue-700">Free repairs for manufacturing defects</span>
+                </div>
+              </div>
+              <Button asChild variant="link" className="text-blue-600 p-0 mt-2 h-auto">
+                <Link to="/warranty">View full warranty details →</Link>
+              </Button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

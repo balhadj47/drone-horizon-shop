@@ -89,7 +89,7 @@ const Layout = ({ children }: LayoutProps) => {
 
       <footer className="bg-slate-800 text-white mt-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
@@ -118,13 +118,24 @@ const Layout = ({ children }: LayoutProps) => {
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Legal</h3>
+              <h3 className="font-semibold mb-4">Legal & Policies</h3>
               <ul className="space-y-2 text-sm text-slate-400">
                 <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
                 <li><Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link></li>
-                <li><Link to="/shipping-returns" className="hover:text-white transition-colors">Returns Policy</Link></li>
+                <li><Link to="/cookie-policy" className="hover:text-white transition-colors">Cookie Policy</Link></li>
                 <li><Link to="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link></li>
                 <li><Link to="/warranty" className="hover:text-white transition-colors">Warranty</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-4">Compliance</h3>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li><Link to="/financial-compliance" className="hover:text-white transition-colors">Financial Compliance</Link></li>
+                <li><Link to="/environmental-policy" className="hover:text-white transition-colors">Environmental Policy</Link></li>
+                <li><Link to="/accessibility-statement" className="hover:text-white transition-colors">Accessibility</Link></li>
+                <li><Link to="/technical-compliance" className="hover:text-white transition-colors">Technical Compliance</Link></li>
+                <li><Link to="/age-verification" className="hover:text-white transition-colors">Age Verification</Link></li>
               </ul>
             </div>
 

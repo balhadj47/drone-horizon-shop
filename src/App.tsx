@@ -30,6 +30,10 @@ import RegulatoryCompliance from "./pages/RegulatoryCompliance";
 import RightOfWithdrawal from "./pages/RightOfWithdrawal";
 import DisputeResolution from "./pages/DisputeResolution";
 import ProductLiability from "./pages/ProductLiability";
+import FinancialCompliance from "./pages/FinancialCompliance";
+import EnvironmentalPolicy from "./pages/EnvironmentalPolicy";
+import AccessibilityStatement from "./pages/AccessibilityStatement";
+import TechnicalCompliance from "./pages/TechnicalCompliance";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +69,10 @@ const App = () => (
                   <Route path="/right-of-withdrawal" element={<RightOfWithdrawal />} />
                   <Route path="/dispute-resolution" element={<DisputeResolution />} />
                   <Route path="/product-liability" element={<ProductLiability />} />
+                  <Route path="/financial-compliance" element={<FinancialCompliance />} />
+                  <Route path="/environmental-policy" element={<EnvironmentalPolicy />} />
+                  <Route path="/accessibility-statement" element={<AccessibilityStatement />} />
+                  <Route path="/technical-compliance" element={<TechnicalCompliance />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Layout>

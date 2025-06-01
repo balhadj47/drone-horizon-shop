@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Check, Zap, Shield, Clock } from 'lucide-react';
@@ -87,7 +86,7 @@ const ProductDetail = () => {
               <Badge variant="secondary">{product.category}</Badge>
             </div>
             <p className="text-3xl font-bold text-blue-600 mb-4">
-              ${product.price.toLocaleString()}
+              £{product.price.toLocaleString()}
             </p>
             <p className="text-lg text-slate-600">
               {product.description}

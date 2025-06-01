@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Heart, Eye, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -133,7 +134,7 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
           
           <div className="flex items-center justify-between">
             <span className="text-xl font-bold text-blue-600">
-              ${product.price.toLocaleString()}
+              £{product.price.toLocaleString()}
             </span>
             
             <Button

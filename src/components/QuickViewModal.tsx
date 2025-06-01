@@ -75,7 +75,7 @@ const QuickViewModal = ({ product, isOpen, onClose }: QuickViewModalProps) => {
               </Button>
             </div>
 
-            <p className="text-3xl font-bold text-blue-600">${product.price.toLocaleString()}</p>
+            <p className="text-3xl font-bold text-blue-600">£{product.price.toLocaleString()}</p>
             
             <p className="text-slate-600">{product.description}</p>
 

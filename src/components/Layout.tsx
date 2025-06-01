@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Plane } from 'lucide-react';
+import { ShoppingCart, Zap } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 
 interface LayoutProps {
@@ -19,9 +18,14 @@ const Layout = ({ children }: LayoutProps) => {
       <header className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center space-x-2">
-              <Plane className="h-8 w-8 text-blue-600" />
-              <span className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+            <Link to="/" className="flex items-center space-x-3">
+              <div className="relative">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg flex items-center justify-center shadow-lg">
+                  <Zap className="h-6 w-6 text-white" />
+                </div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 rounded-full animate-pulse"></div>
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-800 to-indigo-700 bg-clip-text text-transparent">
                 Manificos
               </span>
             </Link>
@@ -62,8 +66,10 @@ const Layout = ({ children }: LayoutProps) => {
       <footer className="bg-slate-800 text-white mt-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <Plane className="h-6 w-6 text-blue-400" />
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                <Zap className="h-5 w-5 text-white" />
+              </div>
               <span className="text-lg font-semibold">Manificos</span>
             </div>
             <p className="text-slate-400">

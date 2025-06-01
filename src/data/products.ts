@@ -4,91 +4,91 @@ import { Product } from '../contexts/CartContext';
 export const products: Product[] = [
   {
     id: "1",
-    name: "SkyMaster Pro 4K",
-    price: 1299,
-    image: "/placeholder.svg",
+    name: "DJI Mavic 3 Pro",
+    price: 2199,
+    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
     category: "Professional",
-    description: "Professional-grade drone with 4K camera and advanced stabilization. Perfect for aerial photography and videography professionals.",
+    description: "The DJI Mavic 3 Pro features a Hasselblad camera with 4/3 CMOS sensor, delivering stunning 5.1K video and 20MP photos with exceptional detail and color accuracy.",
     specs: {
-      flightTime: "30 minutes",
-      range: "7 km",
-      camera: "4K 60fps",
-      weight: "1.2 kg"
+      flightTime: "43 minutes",
+      range: "15 km",
+      camera: "5.1K 50fps",
+      weight: "0.9 kg"
     },
     inStock: true
   },
   {
     id: "2",
-    name: "AeroScout Beginner",
-    price: 299,
-    image: "/placeholder.svg",
+    name: "DJI Mini 3",
+    price: 759,
+    image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=500&h=500&fit=crop",
     category: "Beginner",
-    description: "Easy-to-fly drone perfect for beginners. Features one-button takeoff and landing with built-in safety features.",
+    description: "Ultra-lightweight and compact drone perfect for beginners. Features intelligent flight modes, 4K HDR video, and enhanced wind resistance for stable flights.",
     specs: {
-      flightTime: "15 minutes",
-      range: "500 m",
-      camera: "1080p 30fps",
-      weight: "0.5 kg"
+      flightTime: "38 minutes",
+      range: "10 km",
+      camera: "4K 30fps",
+      weight: "0.25 kg"
     },
     inStock: true
   },
   {
     id: "3",
-    name: "RacingBolt X1",
+    name: "FPV Racing Drone X1",
     price: 899,
-    image: "/placeholder.svg",
+    image: "https://images.unsplash.com/photo-1546776230-bb5f6139ff0a?w=500&h=500&fit=crop",
     category: "Racing",
-    description: "High-speed racing drone built for competitive flying. Ultra-lightweight with advanced maneuverability.",
+    description: "High-speed FPV racing drone built for competitive flying. Carbon fiber frame with powerful brushless motors for ultimate performance and agility.",
     specs: {
       flightTime: "8 minutes",
-      range: "1 km",
-      camera: "720p 120fps",
-      weight: "0.3 kg"
+      range: "1.5 km",
+      camera: "1080p 120fps",
+      weight: "0.35 kg"
     },
     inStock: true
   },
   {
     id: "4",
-    name: "CargoLift Heavy",
-    price: 2499,
-    image: "/placeholder.svg",
+    name: "DJI Matrice 300 RTK",
+    price: 13999,
+    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
     category: "Commercial",
-    description: "Industrial-grade drone for cargo delivery and heavy payload transport. Built for commercial applications.",
+    description: "Industrial-grade drone platform designed for enterprise applications. Features dual-operator control, advanced AI capabilities, and weather resistance.",
     specs: {
-      flightTime: "45 minutes",
+      flightTime: "55 minutes",
       range: "15 km",
-      camera: "4K 30fps",
-      weight: "5.2 kg"
+      camera: "Interchangeable",
+      weight: "6.3 kg"
     },
     inStock: true
   },
   {
     id: "5",
-    name: "MiniHover Compact",
-    price: 199,
-    image: "/placeholder.svg",
+    name: "DJI Mini SE",
+    price: 299,
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop",
     category: "Mini",
-    description: "Ultra-portable mini drone that fits in your pocket. Perfect for indoor flying and travel photography.",
+    description: "Entry-level mini drone that's perfect for beginners. Ultra-portable design with 2.7K camera and simplified flight controls for easy operation.",
     specs: {
-      flightTime: "12 minutes",
-      range: "100 m",
-      camera: "1080p 30fps",
-      weight: "0.2 kg"
+      flightTime: "30 minutes",
+      range: "4 km",
+      camera: "2.7K 30fps",
+      weight: "0.24 kg"
     },
     inStock: false
   },
   {
     id: "6",
-    name: "StormChaser Pro",
-    price: 1799,
-    image: "/placeholder.svg",
+    name: "DJI Air 3",
+    price: 1549,
+    image: "https://images.unsplash.com/photo-1487887235947-a955ef187fcc?w=500&h=500&fit=crop",
     category: "Professional",
-    description: "Weather-resistant drone designed for extreme conditions. Features enhanced wind resistance and waterproof camera.",
+    description: "Dual-camera drone with Medium Tele and Wide-Angle cameras. Features omnidirectional obstacle sensing and 46-minute flight time for extended aerial photography.",
     specs: {
-      flightTime: "35 minutes",
-      range: "10 km",
+      flightTime: "46 minutes",
+      range: "18 km",
       camera: "4K 60fps",
-      weight: "1.8 kg"
+      weight: "0.72 kg"
     },
     inStock: true
   }

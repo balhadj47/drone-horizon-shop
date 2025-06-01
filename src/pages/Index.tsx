@@ -35,7 +35,7 @@ const Index = () => {
                     Shop Now <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="border-2 border-white/50 text-white hover:bg-white/10 hover:text-white hover:border-white/70 font-semibold px-8 py-4 text-lg backdrop-blur-sm transition-all duration-300 transform hover:scale-105">
+                <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 font-semibold px-8 py-4 text-lg shadow-2xl transition-all duration-300 transform hover:scale-105">
                   Learn More
                 </Button>
               </div>

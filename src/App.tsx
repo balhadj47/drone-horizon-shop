@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,11 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import ShippingReturns from "./pages/ShippingReturns";
 import RefundPolicy from "./pages/RefundPolicy";
+import CookiePolicy from "./pages/CookiePolicy";
+import DataProtection from "./pages/DataProtection";
+import AgeVerification from "./pages/AgeVerification";
+import ExportControl from "./pages/ExportControl";
+import RegulatoryCompliance from "./pages/RegulatoryCompliance";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +53,11 @@ const App = () => (
                   <Route path="/terms-of-service" element={<TermsOfService />} />
                   <Route path="/shipping-returns" element={<ShippingReturns />} />
                   <Route path="/refund-policy" element={<RefundPolicy />} />
+                  <Route path="/cookie-policy" element={<CookiePolicy />} />
+                  <Route path="/data-protection" element={<DataProtection />} />
+                  <Route path="/age-verification" element={<AgeVerification />} />
+                  <Route path="/export-control" element={<ExportControl />} />
+                  <Route path="/regulatory-compliance" element={<RegulatoryCompliance />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Layout>

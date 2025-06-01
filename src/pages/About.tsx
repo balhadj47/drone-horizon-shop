@@ -84,7 +84,7 @@ const About = () => {
             </div>
             <div>
               <h3 className="font-medium mb-2">Phone</h3>
-              <p>+12088081919</p>
+              <p className="text-lg font-semibold text-blue-600">+1 (208) 808-1919</p>
             </div>
             <div>
               <h3 className="font-medium mb-2">Hours</h3>

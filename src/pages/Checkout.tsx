@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -7,11 +6,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useCart } from '../contexts/CartContext';
 import { toast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 
 const Checkout = () => {
   const { state, clearCart } = useCart();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isGuest, setIsGuest] = useState(true);
   
   const [formData, setFormData] = useState({
     email: '',
@@ -27,6 +28,9 @@ const Checkout = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const shippingCost = state.total >= 500 ? 0 : 49;
+  const finalTotal = state.total + shippingCost;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,13 +55,34 @@ const Checkout = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-slate-900 mb-8">Quick Checkout</h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold text-slate-900">Checkout</h1>
+        <Button asChild variant="outline">
+          <Link to="/cart">Back to Cart</Link>
+        </Button>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Simplified Checkout Form */}
+        {/* Checkout Form */}
         <Card>
           <CardHeader>
             <CardTitle>Delivery Details</CardTitle>
+            <div className="flex gap-4 text-sm">
+              <button
+                type="button"
+                onClick={() => setIsGuest(true)}
+                className={`px-3 py-1 rounded ${isGuest ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+              >
+                Guest Checkout
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsGuest(false)}
+                className={`px-3 py-1 rounded ${!isGuest ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+              >
+                Create Account
+              </button>
+            </div>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -123,11 +148,37 @@ const Checkout = () => {
                 </div>
               </div>
 
+              {!isGuest && (
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      placeholder="Create password"
+                      required={!isGuest}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                    <Input
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type="password"
+                      placeholder="Confirm password"
+                      required={!isGuest}
+                    />
+                  </div>
+                </div>
+              )}
+
               <Card className="bg-blue-50 border-blue-200">
                 <CardContent className="p-4">
                   <h3 className="font-semibold text-blue-900 mb-2">💳 Express Payment</h3>
                   <p className="text-blue-700 text-sm">
-                    Secure 1-click payment • Free shipping over $500
+                    {isGuest ? 'Quick guest checkout' : 'Secure account creation'} • 
+                    {shippingCost === 0 ? ' Free shipping' : ` $${shippingCost} shipping`}
                   </p>
                 </CardContent>
               </Card>
@@ -138,13 +189,13 @@ const Checkout = () => {
                 size="lg"
                 disabled={isProcessing}
               >
-                {isProcessing ? 'Processing...' : `Complete Order - $${state.total.toLocaleString()}`}
+                {isProcessing ? 'Processing...' : `Complete Order - $${finalTotal.toLocaleString()}`}
               </Button>
             </form>
           </CardContent>
         </Card>
 
-        {/* Order Summary */}
+        {/* Enhanced Order Summary */}
         <Card className="h-fit">
           <CardHeader>
             <CardTitle>Order Summary ({state.items.length} items)</CardTitle>
@@ -175,13 +226,26 @@ const Checkout = () => {
                   <span>Subtotal</span>
                   <span>${state.total.toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between text-sm text-green-600">
-                  <span>Shipping</span>
-                  <span>FREE</span>
+                <div className="flex justify-between text-sm">
+                  <span className={shippingCost === 0 ? "text-green-600" : "text-slate-600"}>
+                    Shipping
+                  </span>
+                  <span className={shippingCost === 0 ? "text-green-600" : "text-slate-600"}>
+                    {shippingCost === 0 ? 'FREE' : `$${shippingCost}`}
+                  </span>
+                </div>
+                {shippingCost === 0 && (
+                  <div className="text-xs text-green-600">
+                    🎉 You saved $49 on shipping!
+                  </div>
+                )}
+                <div className="flex justify-between text-sm text-slate-600">
+                  <span>Estimated delivery</span>
+                  <span>3-5 business days</span>
                 </div>
                 <div className="flex justify-between text-lg font-semibold border-t pt-2">
                   <span>Total</span>
-                  <span className="text-blue-600">${state.total.toLocaleString()}</span>
+                  <span className="text-blue-600">${finalTotal.toLocaleString()}</span>
                 </div>
               </div>
             </div>

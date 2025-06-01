@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -99,13 +98,16 @@ const Products = () => {
     setSearchQuery('');
   };
 
-  const handleQuickAddToCart = (product: Product, e: React.MouseEvent) => {
+  const handleQuickAddToCart = (product: Product, quantity: number = 1, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product);
+    // Add multiple quantities at once
+    for (let i = 0; i < quantity; i++) {
+      addToCart(product);
+    }
     toast({
       title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
+      description: `${quantity} x ${product.name} added to your cart.`,
     });
   };
 
@@ -299,17 +301,65 @@ const Products = () => {
                         ${product.price.toLocaleString()}
                       </span>
                       <div className="flex gap-2">
+                        {/* Quantity Selector with Add to Cart */}
+                        <div className="flex items-center border rounded-md">
+                          <Button 
+                            size="sm"
+                            variant="ghost"
+                            className="px-2 h-8"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              const qtyInput = e.currentTarget.parentElement?.querySelector('input') as HTMLInputElement;
+                              if (qtyInput && parseInt(qtyInput.value) > 1) {
+                                qtyInput.value = (parseInt(qtyInput.value) - 1).toString();
+                              }
+                            }}
+                            disabled={!product.inStock}
+                          >
+                            -
+                          </Button>
+                          <input 
+                            type="number" 
+                            min="1" 
+                            max="10" 
+                            defaultValue="1"
+                            className="w-12 text-center border-0 focus:ring-0 h-8 text-sm"
+                            onClick={(e) => e.stopPropagation()}
+                            disabled={!product.inStock}
+                          />
+                          <Button 
+                            size="sm"
+                            variant="ghost"
+                            className="px-2 h-8"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              const qtyInput = e.currentTarget.parentElement?.querySelector('input') as HTMLInputElement;
+                              if (qtyInput && parseInt(qtyInput.value) < 10) {
+                                qtyInput.value = (parseInt(qtyInput.value) + 1).toString();
+                              }
+                            }}
+                            disabled={!product.inStock}
+                          >
+                            +
+                          </Button>
+                        </div>
                         <Button 
                           size="sm"
-                          variant="outline"
-                          onClick={(e) => handleQuickAddToCart(product, e)}
+                          onClick={(e) => {
+                            const qtyInput = e.currentTarget.parentElement?.querySelector('input') as HTMLInputElement;
+                            const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+                            handleQuickAddToCart(product, quantity, e);
+                          }}
                           disabled={!product.inStock}
                         >
-                          <ShoppingCart className="h-4 w-4" />
+                          <ShoppingCart className="h-4 w-4 mr-1" />
+                          Add
                         </Button>
-                        <Button asChild size="sm" disabled={!product.inStock}>
+                        <Button asChild size="sm" variant="outline" disabled={!product.inStock}>
                           <Link to={`/products/${product.id}`}>
-                            {product.inStock ? 'Details' : 'Out of Stock'}
+                            Details
                           </Link>
                         </Button>
                       </div>

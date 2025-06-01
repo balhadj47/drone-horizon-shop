@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
@@ -26,7 +25,12 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-slate-900 mb-8">Shopping Cart</h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold text-slate-900">Shopping Cart</h1>
+        <Button asChild variant="outline">
+          <Link to="/products">Continue Shopping</Link>
+        </Button>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Cart Items */}
@@ -101,17 +105,40 @@ const Cart = () => {
                   </div>
                 ))}
                 
-                <div className="border-t pt-3">
-                  <div className="flex justify-between font-semibold text-lg">
+                <div className="border-t pt-3 space-y-2">
+                  <div className="flex justify-between text-sm text-slate-600">
+                    <span>Subtotal</span>
+                    <span>${state.total.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-sm text-green-600">
+                    <span>Shipping</span>
+                    <span>{state.total >= 500 ? 'FREE' : '$49'}</span>
+                  </div>
+                  {state.total < 500 && (
+                    <div className="text-xs text-slate-500">
+                      Add ${(500 - state.total).toLocaleString()} more for free shipping
+                    </div>
+                  )}
+                  <div className="flex justify-between text-lg font-semibold border-t pt-2">
                     <span>Total</span>
-                    <span className="text-blue-600">${state.total.toLocaleString()}</span>
+                    <span className="text-blue-600">
+                      ${(state.total + (state.total >= 500 ? 0 : 49)).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="text-xs text-slate-500">
+                    Estimated delivery: 3-5 business days
                   </div>
                 </div>
               </div>
 
-              <Button asChild className="w-full" size="lg">
-                <Link to="/checkout">Proceed to Checkout</Link>
-              </Button>
+              <div className="space-y-3">
+                <Button asChild className="w-full" size="lg">
+                  <Link to="/checkout">Proceed to Checkout</Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full">
+                  <Link to="/products">Continue Shopping</Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

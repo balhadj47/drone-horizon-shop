@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Zap } from 'lucide-react';
+import { ShoppingCart, Zap, Mail, Phone, MapPin } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
+import MobileNav from './MobileNav';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -47,16 +49,27 @@ const Layout = ({ children }: LayoutProps) => {
               >
                 Products
               </Link>
+              <Link 
+                to="/about" 
+                className={`text-slate-600 hover:text-blue-600 transition-colors ${
+                  location.pathname === '/about' ? 'text-blue-600 font-medium' : ''
+                }`}
+              >
+                About
+              </Link>
             </nav>
 
-            <Link to="/cart" className="relative p-2 text-slate-600 hover:text-blue-600 transition-colors">
-              <ShoppingCart className="h-6 w-6" />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {itemCount}
-                </span>
-              )}
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link to="/cart" className="relative p-2 text-slate-600 hover:text-blue-600 transition-colors">
+                <ShoppingCart className="h-6 w-6" />
+                {itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {itemCount}
+                  </span>
+                )}
+              </Link>
+              <MobileNav />
+            </div>
           </div>
         </div>
       </header>
@@ -64,17 +77,60 @@ const Layout = ({ children }: LayoutProps) => {
       <main>{children}</main>
 
       <footer className="bg-slate-800 text-white mt-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                <Zap className="h-5 w-5 text-white" />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                  <Zap className="h-5 w-5 text-white" />
+                </div>
+                <span className="text-lg font-semibold">Manificos</span>
               </div>
-              <span className="text-lg font-semibold">Manificos</span>
+              <p className="text-slate-400 text-sm">
+                Premium drones and accessories for professionals and enthusiasts worldwide.
+              </p>
             </div>
-            <p className="text-slate-400">
-              Premium drones and accessories for professionals and enthusiasts
-            </p>
+
+            <div>
+              <h3 className="font-semibold mb-4">Quick Links</h3>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li><Link to="/products" className="hover:text-white transition-colors">Products</Link></li>
+                <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+                <li><Link to="/cart" className="hover:text-white transition-colors">Cart</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-4">Support</h3>
+              <ul className="space-y-2 text-sm text-slate-400">
+                <li>Shipping & Returns</li>
+                <li>FAQ</li>
+                <li>Warranty</li>
+                <li>Support Center</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-4">Contact</h3>
+              <div className="space-y-3 text-sm text-slate-400">
+                <div className="flex items-center gap-2">
+                  <Mail className="h-4 w-4" />
+                  <span>support@manificos.com</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="h-4 w-4" />
+                  <span>1-800-DRONES</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4" />
+                  <span>Mon-Fri 9AM-6PM EST</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-slate-700 mt-8 pt-8 text-center text-sm text-slate-400">
+            <p>&copy; 2024 Manificos. All rights reserved.</p>
           </div>
         </div>
       </footer>

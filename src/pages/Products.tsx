@@ -1,33 +1,45 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { products } from '../data/products';
+import SearchBar from '../components/SearchBar';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('name');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const categories = ['all', ...Array.from(new Set(products.map(p => p.category)))];
 
-  const filteredProducts = products.filter(product => 
-    selectedCategory === 'all' || product.category === selectedCategory
-  );
+  const filteredAndSearchedProducts = useMemo(() => {
+    let filtered = products.filter(product => 
+      selectedCategory === 'all' || product.category === selectedCategory
+    );
 
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    switch (sortBy) {
-      case 'price-low':
-        return a.price - b.price;
-      case 'price-high':
-        return b.price - a.price;
-      case 'name':
-      default:
-        return a.name.localeCompare(b.name);
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(product =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
-  });
+
+    return filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'price-low':
+          return a.price - b.price;
+        case 'price-high':
+          return b.price - a.price;
+        case 'name':
+        default:
+          return a.name.localeCompare(b.name);
+      }
+    });
+  }, [selectedCategory, sortBy, searchQuery]);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -35,9 +47,14 @@ const Products = () => {
         <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
           Our Drone Collection
         </h1>
-        <p className="text-xl text-slate-600">
+        <p className="text-xl text-slate-600 mb-6">
           Explore our complete range of professional and recreational drones
         </p>
+        
+        {/* Search Bar */}
+        <div className="mb-6">
+          <SearchBar onSearch={setSearchQuery} />
+        </div>
       </div>
 
       {/* Filters */}
@@ -70,9 +87,18 @@ const Products = () => {
         </div>
       </div>
 
+      {/* Results Count */}
+      {searchQuery && (
+        <div className="mb-4">
+          <p className="text-slate-600">
+            Found {filteredAndSearchedProducts.length} result{filteredAndSearchedProducts.length !== 1 ? 's' : ''} for "{searchQuery}"
+          </p>
+        </div>
+      )}
+
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {sortedProducts.map((product) => (
+        {filteredAndSearchedProducts.map((product) => (
           <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
             <div className="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative">
               <img 
@@ -119,9 +145,20 @@ const Products = () => {
         ))}
       </div>
 
-      {sortedProducts.length === 0 && (
+      {filteredAndSearchedProducts.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-xl text-slate-600">No products found in this category.</p>
+          <p className="text-xl text-slate-600">
+            {searchQuery ? `No products found for "${searchQuery}"` : 'No products found in this category.'}
+          </p>
+          {searchQuery && (
+            <Button 
+              variant="outline" 
+              onClick={() => setSearchQuery('')}
+              className="mt-4"
+            >
+              Clear Search
+            </Button>
+          )}
         </div>
       )}
     </div>

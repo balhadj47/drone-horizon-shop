@@ -1,3 +1,4 @@
+
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -19,6 +20,23 @@ const Checkout = lazy(() => import("./pages/Checkout"));
 const Success = lazy(() => import("./pages/Success"));
 const About = lazy(() => import("./pages/About"));
 const Auth = lazy(() => import("./pages/Auth"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const ShippingReturns = lazy(() => import("./pages/ShippingReturns"));
+const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
+const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
+const DataProtection = lazy(() => import("./pages/DataProtection"));
+const AgeVerification = lazy(() => import("./pages/AgeVerification"));
+const ExportControl = lazy(() => import("./pages/ExportControl"));
+const RegulatoryCompliance = lazy(() => import("./pages/RegulatoryCompliance"));
+const RightOfWithdrawal = lazy(() => import("./pages/RightOfWithdrawal"));
+const DisputeResolution = lazy(() => import("./pages/DisputeResolution"));
+const ProductLiability = lazy(() => import("./pages/ProductLiability"));
+const FinancialCompliance = lazy(() => import("./pages/FinancialCompliance"));
+const EnvironmentalPolicy = lazy(() => import("./pages/EnvironmentalPolicy"));
+const AccessibilityStatement = lazy(() => import("./pages/AccessibilityStatement"));
+const TechnicalCompliance = lazy(() => import("./pages/TechnicalCompliance"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
 

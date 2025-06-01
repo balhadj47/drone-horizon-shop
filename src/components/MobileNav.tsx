@@ -1,77 +1,107 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Home, Package, ShoppingCart, Heart } from 'lucide-react';
+import { Home, Package, ShoppingCart, Heart, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useCart } from '../contexts/CartContext';
-import { useWishlist } from '../contexts/WishlistContext';
+import { Badge } from '@/components/ui/badge';
+import { User as SupabaseUser } from '@supabase/supabase-js';
 
-const MobileNav = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface MobileNavProps {
+  user: SupabaseUser | null;
+  onSignOut: () => Promise<void>;
+  onClose: () => void;
+  cartItemsCount: number;
+  wishlistItemsCount: number;
+}
+
+const MobileNav = ({ user, onSignOut, onClose, cartItemsCount, wishlistItemsCount }: MobileNavProps) => {
   const location = useLocation();
-  const { state } = useCart();
-  const { state: wishlistState } = useWishlist();
-  
-  const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0);
-  const wishlistCount = wishlistState.items.length;
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-
-  const menuItems = [
+  const navigationItems = [
     { path: '/', label: 'Home', icon: Home },
     { path: '/products', label: 'Products', icon: Package },
-    { path: '/wishlist', label: 'Wishlist', icon: Heart, badge: wishlistCount },
-    { path: '/cart', label: 'Cart', icon: ShoppingCart, badge: itemCount },
+    { path: '/about', label: 'About', icon: Home },
   ];
 
-  return (
-    <div className="md:hidden">
-      <Button variant="ghost" size="sm" onClick={toggleMenu}>
-        <Menu className="h-6 w-6" />
-      </Button>
+  const handleSignOut = async () => {
+    await onSignOut();
+    onClose();
+  };
 
-      {isOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50" onClick={toggleMenu}>
-          <div className="fixed right-0 top-0 h-full w-64 bg-white shadow-lg" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between p-4 border-b">
-              <span className="font-semibold">Menu</span>
-              <Button variant="ghost" size="sm" onClick={toggleMenu}>
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            
-            <nav className="p-4">
-              {menuItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={toggleMenu}
-                    className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-                      location.pathname === item.path
-                        ? 'bg-blue-50 text-blue-600'
-                        : 'text-slate-600 hover:bg-slate-50'
-                    }`}
-                  >
-                    <div className="relative">
-                      <Icon className="h-5 w-5" />
-                      {item.badge && item.badge > 0 && (
-                        <span className={`absolute -top-2 -right-2 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center ${
-                          item.path === '/wishlist' ? 'bg-red-500' : 'bg-blue-600'
-                        }`}>
-                          {item.badge}
-                        </span>
-                      )}
-                    </div>
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
+  return (
+    <div className="md:hidden bg-white border-t">
+      <div className="px-4 py-4 space-y-2">
+        {navigationItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              onClick={onClose}
+              className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
+                location.pathname === item.path
+                  ? 'bg-blue-50 text-blue-600'
+                  : 'text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              <Icon className="h-5 w-5" />
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+        
+        <div className="border-t pt-2 mt-2">
+          <Link
+            to="/wishlist"
+            onClick={onClose}
+            className="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-gray-50 relative"
+          >
+            <Heart className="h-5 w-5" />
+            <span>Wishlist</span>
+            {wishlistItemsCount > 0 && (
+              <Badge variant="destructive" className="ml-auto">
+                {wishlistItemsCount}
+              </Badge>
+            )}
+          </Link>
+          
+          <Link
+            to="/cart"
+            onClick={onClose}
+            className="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-gray-50 relative"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            <span>Cart</span>
+            {cartItemsCount > 0 && (
+              <Badge variant="destructive" className="ml-auto">
+                {cartItemsCount}
+              </Badge>
+            )}
+          </Link>
         </div>
-      )}
+
+        <div className="border-t pt-2 mt-2">
+          {user ? (
+            <Button
+              variant="ghost"
+              onClick={handleSignOut}
+              className="w-full justify-start p-3 text-gray-700 hover:bg-gray-50"
+            >
+              <LogOut className="h-5 w-5 mr-3" />
+              Sign Out
+            </Button>
+          ) : (
+            <Link
+              to="/auth"
+              onClick={onClose}
+              className="flex items-center space-x-3 p-3 rounded-lg text-gray-700 hover:bg-gray-50"
+            >
+              <User className="h-5 w-5" />
+              <span>Sign In</span>
+            </Link>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

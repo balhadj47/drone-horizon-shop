@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { useCart } from '../contexts/CartContext';
 import { products } from '../data/products';
 import { toast } from '@/hooks/use-toast';
+import ReviewsSection from '../components/ReviewsSection';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -66,7 +67,7 @@ const ProductDetail = () => {
         </Link>
       </Button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
         {/* Product Image */}
         <div className="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg overflow-hidden">
           <img 
@@ -205,6 +206,9 @@ const ProductDetail = () => {
           </Card>
         </div>
       </div>
+
+      {/* Reviews Section */}
+      <ReviewsSection productId={product.id} />
     </div>
   );
 };

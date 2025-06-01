@@ -41,7 +41,7 @@ const ProductFilters = ({
         {/* Price Range */}
         <div>
           <Label className="text-sm font-medium mb-3 block">
-            Price Range: ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}
+            Price Range: £{priceRange[0].toLocaleString()} - £{priceRange[1].toLocaleString()}
           </Label>
           <Slider
             value={priceRange}

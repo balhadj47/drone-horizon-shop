@@ -22,7 +22,7 @@ const Layout = ({ children }: LayoutProps) => {
             <Link to="/" className="flex items-center space-x-2">
               <Plane className="h-8 w-8 text-blue-600" />
               <span className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
-                SkyTech Drones
+                Manificos
               </span>
             </Link>
             
@@ -64,7 +64,7 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <Plane className="h-6 w-6 text-blue-400" />
-              <span className="text-lg font-semibold">SkyTech Drones</span>
+              <span className="text-lg font-semibold">Manificos</span>
             </div>
             <p className="text-slate-400">
               Premium drones and accessories for professionals and enthusiasts

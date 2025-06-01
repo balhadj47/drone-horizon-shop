@@ -179,7 +179,7 @@ const Warranty = () => {
                   <Mail className="h-5 w-5 text-blue-600" />
                   <div>
                     <h4 className="font-semibold">Email Support</h4>
-                    <p className="text-slate-600">warranty@manificos.com</p>
+                    <p className="text-slate-600">contact@manificos.com</p>
                     <p className="text-sm text-slate-500">Response within 24 hours</p>
                   </div>
                 </div>
@@ -188,8 +188,8 @@ const Warranty = () => {
                   <Phone className="h-5 w-5 text-blue-600" />
                   <div>
                     <h4 className="font-semibold">Phone Support</h4>
-                    <p className="text-slate-600">1-800-WARRANTY</p>
-                    <p className="text-sm text-slate-500">Mon-Fri 9AM-6PM EST</p>
+                    <p className="text-slate-600">+12088081919</p>
+                    <p className="text-sm text-slate-500">24/7 Support Available</p>
                   </div>
                 </div>
               </div>

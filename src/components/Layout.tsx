@@ -123,6 +123,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
                 <li><Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link></li>
                 <li><Link to="/shipping-returns" className="hover:text-white transition-colors">Returns Policy</Link></li>
+                <li><Link to="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link></li>
                 <li><Link to="/warranty" className="hover:text-white transition-colors">Warranty</Link></li>
               </ul>
             </div>

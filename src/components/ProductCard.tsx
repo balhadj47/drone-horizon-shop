@@ -18,8 +18,8 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
   const { addToCart } = useCart();
-  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
-  const isInWishlist = wishlist.some(item => item.id === product.id);
+  const { state, addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const isProductInWishlist = isInWishlist(product.id);
   const { average, count } = getProductRating(product.id);
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -33,7 +33,7 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
 
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (isInWishlist) {
+    if (isProductInWishlist) {
       removeFromWishlist(product.id);
       toast({
         title: "Removed from wishlist",
@@ -67,7 +67,7 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
               onClick={handleWishlistToggle}
               className="h-8 w-8 bg-white/90 hover:bg-white"
             >
-              <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-red-500 text-red-500' : 'text-slate-600'}`} />
+              <Heart className={`h-4 w-4 ${isProductInWishlist ? 'fill-red-500 text-red-500' : 'text-slate-600'}`} />
             </Button>
             <Button
               size="icon"

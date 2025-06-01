@@ -1,22 +1,26 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Home, Package, ShoppingCart } from 'lucide-react';
+import { Menu, X, Home, Package, ShoppingCart, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '../contexts/CartContext';
+import { useWishlist } from '../contexts/WishlistContext';
 
 const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { state } = useCart();
+  const { state: wishlistState } = useWishlist();
   
   const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0);
+  const wishlistCount = wishlistState.items.length;
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const menuItems = [
     { path: '/', label: 'Home', icon: Home },
     { path: '/products', label: 'Products', icon: Package },
+    { path: '/wishlist', label: 'Wishlist', icon: Heart, badge: wishlistCount },
     { path: '/cart', label: 'Cart', icon: ShoppingCart, badge: itemCount },
   ];
 
@@ -53,7 +57,9 @@ const MobileNav = () => {
                     <div className="relative">
                       <Icon className="h-5 w-5" />
                       {item.badge && item.badge > 0 && (
-                        <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        <span className={`absolute -top-2 -right-2 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center ${
+                          item.path === '/wishlist' ? 'bg-red-500' : 'bg-blue-600'
+                        }`}>
                           {item.badge}
                         </span>
                       )}

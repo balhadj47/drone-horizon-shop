@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Zap, Mail, Phone, MapPin } from 'lucide-react';
+import { ShoppingCart, Zap, Mail, Phone, MapPin, Heart } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
+import { useWishlist } from '../contexts/WishlistContext';
 import MobileNav from './MobileNav';
 
 interface LayoutProps {
@@ -11,9 +11,11 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const { state } = useCart();
+  const { state: wishlistState } = useWishlist();
   const location = useLocation();
 
   const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0);
+  const wishlistCount = wishlistState.items.length;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
@@ -60,6 +62,14 @@ const Layout = ({ children }: LayoutProps) => {
             </nav>
 
             <div className="flex items-center gap-4">
+              <Link to="/wishlist" className="relative p-2 text-slate-600 hover:text-blue-600 transition-colors">
+                <Heart className="h-6 w-6" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
               <Link to="/cart" className="relative p-2 text-slate-600 hover:text-blue-600 transition-colors">
                 <ShoppingCart className="h-6 w-6" />
                 {itemCount > 0 && (

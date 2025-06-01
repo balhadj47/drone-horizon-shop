@@ -19,6 +19,8 @@ type WishlistAction =
 
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
+const initialState: WishlistState = { items: [] };
+
 const wishlistReducer = (state: WishlistState, action: WishlistAction): WishlistState => {
   switch (action.type) {
     case 'ADD_TO_WISHLIST':
@@ -40,7 +42,7 @@ const wishlistReducer = (state: WishlistState, action: WishlistAction): Wishlist
 };
 
 export const WishlistProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(wishlistReducer, { items: [] });
+  const [state, dispatch] = useReducer(wishlistReducer, initialState);
 
   const addToWishlist = (product: Product) => {
     dispatch({ type: 'ADD_TO_WISHLIST', payload: product });

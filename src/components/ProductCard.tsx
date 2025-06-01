@@ -19,7 +19,9 @@ interface ProductCardProps {
 const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
   const { addToCart } = useCart();
   const { state, addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
-  const isProductInWishlist = isInWishlist(product.id);
+  
+  // Add defensive check for state
+  const isProductInWishlist = state?.items ? isInWishlist(product.id) : false;
   const { average, count } = getProductRating(product.id);
 
   const handleAddToCart = (e: React.MouseEvent) => {

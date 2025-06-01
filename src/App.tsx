@@ -18,6 +18,9 @@ import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Warranty from "./pages/Warranty";
 import Wishlist from "./pages/Wishlist";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import ShippingReturns from "./pages/ShippingReturns";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +44,9 @@ const App = () => (
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/success" element={<Success />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/terms-of-service" element={<TermsOfService />} />
+                  <Route path="/shipping-returns" element={<ShippingReturns />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Layout>

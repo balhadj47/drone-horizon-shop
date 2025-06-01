@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,13 +7,25 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { products } from '../data/products';
 import SearchBar from '../components/SearchBar';
+import ProductSkeleton from '../components/ProductSkeleton';
+import { useLoading } from '../hooks/useLoading';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('name');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const { isLoading, startLoading, stopLoading } = useLoading(true);
 
   const categories = ['all', ...Array.from(new Set(products.map(p => p.category)))];
+
+  // Simulate loading for better UX
+  useEffect(() => {
+    startLoading();
+    const timer = setTimeout(() => {
+      stopLoading();
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [selectedCategory, sortBy]);
 
   const filteredAndSearchedProducts = useMemo(() => {
     let filtered = products.filter(product => 
@@ -88,7 +100,7 @@ const Products = () => {
       </div>
 
       {/* Results Count */}
-      {searchQuery && (
+      {searchQuery && !isLoading && (
         <div className="mb-4">
           <p className="text-slate-600">
             Found {filteredAndSearchedProducts.length} result{filteredAndSearchedProducts.length !== 1 ? 's' : ''} for "{searchQuery}"
@@ -98,54 +110,63 @@ const Products = () => {
 
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredAndSearchedProducts.map((product) => (
-          <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-            <div className="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative">
-              <img 
-                src={product.image} 
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-              {!product.inStock && (
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                  <Badge variant="destructive">Out of Stock</Badge>
-                </div>
-              )}
-            </div>
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="text-xl font-semibold">{product.name}</h3>
-                <Badge variant="secondary">{product.category}</Badge>
+        {isLoading ? (
+          // Show skeleton loading
+          Array.from({ length: 6 }).map((_, index) => (
+            <ProductSkeleton key={index} />
+          ))
+        ) : (
+          // Show actual products
+          filteredAndSearchedProducts.map((product) => (
+            <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+              <div className="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative">
+                <img 
+                  src={product.image} 
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                {!product.inStock && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <Badge variant="destructive">Out of Stock</Badge>
+                  </div>
+                )}
               </div>
-              <p className="text-slate-600 mb-4 line-clamp-2">{product.description}</p>
-              
-              <div className="space-y-2 mb-4 text-sm text-slate-600">
-                <div className="flex justify-between">
-                  <span>Flight Time:</span>
-                  <span>{product.specs.flightTime}</span>
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="text-xl font-semibold">{product.name}</h3>
+                  <Badge variant="secondary">{product.category}</Badge>
                 </div>
-                <div className="flex justify-between">
-                  <span>Range:</span>
-                  <span>{product.specs.range}</span>
+                <p className="text-slate-600 mb-4 line-clamp-2">{product.description}</p>
+                
+                <div className="space-y-2 mb-4 text-sm text-slate-600">
+                  <div className="flex justify-between">
+                    <span>Flight Time:</span>
+                    <span>{product.specs.flightTime}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Range:</span>
+                    <span>{product.specs.range}</span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-blue-600">
-                  ${product.price.toLocaleString()}
-                </span>
-                <Button asChild disabled={!product.inStock}>
-                  <Link to={`/products/${product.id}`}>
-                    {product.inStock ? 'View Details' : 'Out of Stock'}
-                  </Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl font-bold text-blue-600">
+                    ${product.price.toLocaleString()}
+                  </span>
+                  <Button asChild disabled={!product.inStock}>
+                    <Link to={`/products/${product.id}`}>
+                      {product.inStock ? 'View Details' : 'Out of Stock'}
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        )}
       </div>
 
-      {filteredAndSearchedProducts.length === 0 && (
+      {filteredAndSearchedProducts.length === 0 && !isLoading && (
         <div className="text-center py-12">
           <p className="text-xl text-slate-600">
             {searchQuery ? `No products found for "${searchQuery}"` : 'No products found in this category.'}

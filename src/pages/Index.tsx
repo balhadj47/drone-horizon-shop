@@ -1,10 +1,14 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Shield, Truck, Zap, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { products } from '../data/products';
+import TestimonialsSection from '../components/TestimonialsSection';
+import NewsletterSection from '../components/NewsletterSection';
+import TrustBadgesSection from '../components/TrustBadgesSection';
+import FAQSection from '../components/FAQSection';
+import DroneFinderQuiz from '../components/DroneFinderQuiz';
 
 const Index = () => {
   const featuredProducts = products.slice(0, 3);
@@ -63,6 +67,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Trust Badges Section */}
+      <TrustBadgesSection />
+
       {/* Features Section */}
       <section className="py-20 bg-gradient-to-b from-white to-slate-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -108,6 +115,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Drone Finder Quiz */}
+      <DroneFinderQuiz />
 
       {/* Featured Products */}
       <section className="py-20 bg-gradient-to-b from-slate-50 to-white">
@@ -176,6 +186,15 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Customer Testimonials */}
+      <TestimonialsSection />
+
+      {/* FAQ Section */}
+      <FAQSection />
+
+      {/* Newsletter Signup */}
+      <NewsletterSection />
 
       {/* Call to Action Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white relative overflow-hidden">

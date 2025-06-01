@@ -2,202 +2,29 @@
 import { Product } from '../contexts/CartContext';
 
 export const products: Product[] = [
-  // Photography Category
+  // Consumer Drones Category
   {
     id: "1",
-    name: "DJI Mavic 3 Pro",
-    price: 1799,
+    name: "DJI Mini 4 Pro",
+    price: 759,
     image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
-    category: "Photography",
-    description: "The DJI Mavic 3 Pro features a Hasselblad camera with 4/3 CMOS sensor, delivering stunning 5.1K video and 20MP photos with exceptional detail and color accuracy.",
+    category: "Consumer Drones",
+    description: "Compact drone with 4K camera, obstacle avoidance sensors, and weighs under 249g for easy travel and no registration required in most countries.",
     specs: {
-      flightTime: "43 minutes",
-      range: "15 km",
-      camera: "5.1K 50fps",
-      weight: "0.9 kg"
+      flightTime: "34 minutes",
+      range: "20 km",
+      camera: "4K 60fps",
+      weight: "0.249 kg"
     },
     inStock: true
   },
-  {
-    id: "9",
-    name: "DJI Inspire 3",
-    price: 13499,
-    image: "https://images.unsplash.com/photo-1487887235947-a955ef187fcc?w=500&h=500&fit=crop",
-    category: "Photography",
-    description: "Professional cinematography drone with full-frame 8K camera, 360° obstacle sensing, and centimeter-level RTK positioning for Hollywood-quality productions.",
-    specs: {
-      flightTime: "28 minutes",
-      range: "15 km",
-      camera: "8K 75fps",
-      weight: "4.2 kg"
-    },
-    inStock: true
-  },
-  {
-    id: "10",
-    name: "Autel EVO Lite+",
-    price: 899,
-    image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=500&h=500&fit=crop",
-    category: "Photography",
-    description: "6K camera drone with 1-inch CMOS sensor, intelligent flight modes, and advanced obstacle avoidance for professional aerial photography.",
-    specs: {
-      flightTime: "40 minutes",
-      range: "12 km",
-      camera: "6K 30fps",
-      weight: "0.83 kg"
-    },
-    inStock: true
-  },
-
-  // Entry Level Category
   {
     id: "2",
-    name: "DJI Mini 3",
-    price: 619,
-    image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=500&h=500&fit=crop",
-    category: "Entry Level",
-    description: "Ultra-lightweight and compact drone perfect for beginners. Features intelligent flight modes, 4K HDR video, and enhanced wind resistance for stable flights.",
-    specs: {
-      flightTime: "38 minutes",
-      range: "10 km",
-      camera: "4K 30fps",
-      weight: "0.25 kg"
-    },
-    inStock: true
-  },
-  {
-    id: "11",
-    name: "Ryze Tello",
-    price: 89,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop",
-    category: "Entry Level",
-    description: "Perfect starter drone for kids and beginners. Easy to fly with smartphone app control, HD video recording, and programmable flight patterns.",
-    specs: {
-      flightTime: "13 minutes",
-      range: "0.1 km",
-      camera: "720p 30fps",
-      weight: "0.08 kg"
-    },
-    inStock: true
-  },
-  {
-    id: "12",
-    name: "Holy Stone HS720E",
-    price: 199,
-    image: "https://images.unsplash.com/photo-1546776230-bb5f6139ff0a?w=500&h=500&fit=crop",
-    category: "Entry Level",
-    description: "Beginner-friendly drone with 4K camera, GPS return home, follow me mode, and intuitive controls for new pilots.",
-    specs: {
-      flightTime: "23 minutes",
-      range: "1 km",
-      camera: "4K 30fps",
-      weight: "0.65 kg"
-    },
-    inStock: true
-  },
-
-  // Racing Category
-  {
-    id: "3",
-    name: "FPV Racing Drone X1",
-    price: 739,
-    image: "https://images.unsplash.com/photo-1546776230-bb5f6139ff0a?w=500&h=500&fit=crop",
-    category: "Racing",
-    description: "High-speed FPV racing drone built for competitive flying. Carbon fiber frame with powerful brushless motors for ultimate performance and agility.",
-    specs: {
-      flightTime: "8 minutes",
-      range: "1.5 km",
-      camera: "1080p 120fps",
-      weight: "0.35 kg"
-    },
-    inStock: true
-  },
-  {
-    id: "13",
-    name: "iFlight Nazgul5 V2",
-    price: 159,
-    image: "https://images.unsplash.com/photo-1508614732287-89596d3d129a?w=500&h=500&fit=crop",
-    category: "Racing",
-    description: "Professional racing quadcopter frame kit with carbon fiber construction, optimized for speed and agility in competitive FPV racing.",
-    specs: {
-      flightTime: "6 minutes",
-      range: "2 km",
-      camera: "FPV Only",
-      weight: "0.42 kg"
-    },
-    inStock: true
-  },
-  {
-    id: "14",
-    name: "EMAX Tinyhawk III",
-    price: 99,
-    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
-    category: "Racing",
-    description: "Micro FPV racing drone perfect for indoor racing and learning. Durable design with protective propeller guards and easy repairs.",
-    specs: {
-      flightTime: "4 minutes",
-      range: "0.5 km",
-      camera: "25mW VTX",
-      weight: "0.035 kg"
-    },
-    inStock: true
-  },
-
-  // Ultra-Portable Category
-  {
-    id: "5",
-    name: "DJI Mini SE",
-    price: 249,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop",
-    category: "Ultra-Portable",
-    description: "Entry-level mini drone that's perfect for beginners. Ultra-portable design with 2.7K camera and simplified flight controls for easy operation.",
-    specs: {
-      flightTime: "30 minutes",
-      range: "4 km",
-      camera: "2.7K 30fps",
-      weight: "0.24 kg"
-    },
-    inStock: false
-  },
-  {
-    id: "15",
-    name: "DJI Mini 4K",
-    price: 299,
-    image: "https://images.unsplash.com/photo-1487887235947-a955ef187fcc?w=500&h=500&fit=crop",
-    category: "Ultra-Portable",
-    description: "Ultra-compact drone with 4K camera and 3-axis gimbal. Weighs under 249g, no registration required in many countries.",
-    specs: {
-      flightTime: "31 minutes",
-      range: "10 km",
-      camera: "4K 30fps",
-      weight: "0.249 kg"
-    },
-    inStock: true
-  },
-  {
-    id: "16",
-    name: "Potensic Atom SE",
-    price: 179,
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
-    category: "Ultra-Portable",
-    description: "Lightweight foldable drone with 4K camera, GPS positioning, and one-key return. Perfect for travel and casual aerial photography.",
-    specs: {
-      flightTime: "32 minutes",
-      range: "6 km",
-      camera: "4K 25fps",
-      weight: "0.249 kg"
-    },
-    inStock: true
-  },
-
-  // Professional Category
-  {
-    id: "6",
     name: "DJI Air 3",
-    price: 1269,
+    price: 1059,
     image: "https://images.unsplash.com/photo-1487887235947-a955ef187fcc?w=500&h=500&fit=crop",
-    category: "Professional",
-    description: "Dual-camera drone with Medium Tele and Wide-Angle cameras. Features omnidirectional obstacle sensing and 46-minute flight time for extended aerial photography.",
+    category: "Consumer Drones",
+    description: "Dual-camera drone with Medium Tele and Wide-Angle cameras, 46-minute flight time, and advanced subject tracking capabilities.",
     specs: {
       flightTime: "46 minutes",
       range: "18 km",
@@ -207,96 +34,218 @@ export const products: Product[] = [
     inStock: true
   },
   {
-    id: "17",
-    name: "Skydio 2+",
-    price: 999,
+    id: "3",
+    name: "Autel EVO Nano+",
+    price: 649,
     image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=500&h=500&fit=crop",
-    category: "Professional",
-    description: "AI-powered autonomous drone with advanced computer vision. Exceptional obstacle avoidance and subject tracking for professional cinematography.",
+    category: "Consumer Drones",
+    description: "Affordable compact drone with 50MP camera, obstacle sensors, and intelligent flight modes perfect for hobbyists and casual users.",
     specs: {
-      flightTime: "27 minutes",
-      range: "6 km",
-      camera: "4K 60fps",
-      weight: "0.775 kg"
+      flightTime: "28 minutes",
+      range: "10 km",
+      camera: "4K 30fps",
+      weight: "0.249 kg"
     },
     inStock: true
   },
 
-  // Surveillance Category
-  {
-    id: "7",
-    name: "Surveillance Pro X5",
-    price: 2699,
-    image: "https://images.unsplash.com/photo-1508614732287-89596d3d129a?w=500&h=500&fit=crop",
-    category: "Surveillance",
-    description: "Advanced surveillance drone with thermal imaging and night vision capabilities. Perfect for security monitoring and search operations.",
-    specs: {
-      flightTime: "40 minutes",
-      range: "12 km",
-      camera: "4K + Thermal",
-      weight: "1.2 kg"
-    },
-    inStock: true
-  },
-  {
-    id: "18",
-    name: "Autel EVO Max 4T",
-    price: 4999,
-    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
-    category: "Surveillance",
-    description: "Professional surveillance drone with thermal, wide-angle, zoom, and laser rangefinder cameras. Anti-jamming technology and rugged design.",
-    specs: {
-      flightTime: "42 minutes",
-      range: "20 km",
-      camera: "8K + Thermal",
-      weight: "2.7 kg"
-    },
-    inStock: true
-  },
-
-  // Agriculture Category
+  // Professional Drones Category
   {
     id: "4",
-    name: "DJI Matrice 300 RTK",
-    price: 11499,
-    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
-    category: "Agriculture",
-    description: "Industrial-grade drone platform designed for enterprise applications. Features dual-operator control, advanced AI capabilities, and weather resistance.",
+    name: "DJI Mavic 3 Pro",
+    price: 1499,
+    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
+    category: "Professional Drones",
+    description: "Triple camera system including telephoto lens, Hasselblad main camera, and 43-minute flight time for professional cinematography and surveying.",
     specs: {
-      flightTime: "55 minutes",
+      flightTime: "43 minutes",
       range: "15 km",
-      camera: "Interchangeable",
-      weight: "6.3 kg"
+      camera: "5.1K 50fps",
+      weight: "0.9 kg"
+    },
+    inStock: true
+  },
+  {
+    id: "5",
+    name: "Autel EVO II Pro V3",
+    price: 1299,
+    image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=500&h=500&fit=crop",
+    category: "Professional Drones",
+    description: "Professional drone with 6K camera, long-range transmission capabilities, and advanced flight performance for industrial applications.",
+    specs: {
+      flightTime: "40 minutes",
+      range: "15 km",
+      camera: "6K 30fps",
+      weight: "1.19 kg"
+    },
+    inStock: true
+  },
+  {
+    id: "6",
+    name: "DJI Inspire 3",
+    price: 11249,
+    image: "https://images.unsplash.com/photo-1487887235947-a955ef187fcc?w=500&h=500&fit=crop",
+    category: "Professional Drones",
+    description: "Cinema-level drone with full-frame 8K camera, RTK positioning, and professional cinematography features for Hollywood productions.",
+    specs: {
+      flightTime: "28 minutes",
+      range: "15 km",
+      camera: "8K 75fps",
+      weight: "4.2 kg"
+    },
+    inStock: true
+  },
+
+  // FPV & Racing Drones Category
+  {
+    id: "7",
+    name: "DJI Avata 2",
+    price: 989,
+    image: "https://images.unsplash.com/photo-1546776230-bb5f6139ff0a?w=500&h=500&fit=crop",
+    category: "FPV & Racing Drones",
+    description: "Built-in propeller guards, 4K stabilized camera, and compatibility with Goggles 3 for immersive FPV flying experience.",
+    specs: {
+      flightTime: "23 minutes",
+      range: "13.2 km",
+      camera: "4K 60fps",
+      weight: "0.377 kg"
     },
     inStock: true
   },
   {
     id: "8",
-    name: "AgroMapper 450",
-    price: 7399,
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
-    category: "Agriculture",
-    description: "Specialized agricultural drone with crop monitoring sensors, GPS mapping, and automated flight patterns for precision farming.",
+    name: "iFlight Nazgul Evoque F5",
+    price: 289,
+    image: "https://images.unsplash.com/photo-1508614732287-89596d3d129a?w=500&h=500&fit=crop",
+    category: "FPV & Racing Drones",
+    description: "Bind-and-fly racing quadcopter with top-tier performance, carbon fiber frame, and optimized for competitive FPV racing.",
     specs: {
-      flightTime: "60 minutes",
-      range: "20 km",
-      camera: "Multispectral",
-      weight: "3.5 kg"
+      flightTime: "6 minutes",
+      range: "2 km",
+      camera: "FPV Only",
+      weight: "0.42 kg"
+    },
+    inStock: true
+  },
+
+  // Accessories Category
+  {
+    id: "9",
+    name: "DJI RC 2 Controller",
+    price: 299,
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop",
+    category: "Accessories",
+    description: "Advanced remote controller with built-in screen, enhanced transmission range, and compatibility with multiple DJI drone models.",
+    specs: {
+      flightTime: "N/A",
+      range: "18 km",
+      camera: "N/A",
+      weight: "0.6 kg"
     },
     inStock: true
   },
   {
-    id: "19",
-    name: "DJI Agras T40",
-    price: 14999,
-    image: "https://images.unsplash.com/photo-1508614732287-89596d3d129a?w=500&h=500&fit=crop",
-    category: "Agriculture",
-    description: "Agricultural spraying drone with 40L tank capacity, precision spraying system, and terrain-following radar for crop protection.",
+    id: "10",
+    name: "ND Filter Kit - Mini 4 Pro",
+    price: 89,
+    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
+    category: "Accessories",
+    description: "Professional ND filter set for DJI Mini 4 Pro including ND4, ND8, ND16, and ND32 filters for perfect exposure control.",
     specs: {
-      flightTime: "20 minutes",
-      range: "7 km",
-      camera: "FPV + Mapping",
-      weight: "24.5 kg"
+      flightTime: "N/A",
+      range: "N/A",
+      camera: "Filter Set",
+      weight: "0.02 kg"
+    },
+    inStock: true
+  },
+  {
+    id: "11",
+    name: "ND Filter Kit - Mavic 3",
+    price: 149,
+    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
+    category: "Accessories",
+    description: "Professional ND filter collection for DJI Mavic 3 series including multiple density options for cinematic footage.",
+    specs: {
+      flightTime: "N/A",
+      range: "N/A",
+      camera: "Filter Set",
+      weight: "0.05 kg"
+    },
+    inStock: true
+  },
+  {
+    id: "12",
+    name: "ND Filter Kit - Avata",
+    price: 69,
+    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
+    category: "Accessories",
+    description: "Specialized ND filter kit for DJI Avata FPV drone to enhance video quality during high-speed flights.",
+    specs: {
+      flightTime: "N/A",
+      range: "N/A",
+      camera: "Filter Set",
+      weight: "0.015 kg"
+    },
+    inStock: true
+  },
+  {
+    id: "13",
+    name: "Fly More Kit - Mini 4 Pro",
+    price: 329,
+    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
+    category: "Accessories",
+    description: "Complete accessory bundle with extra batteries, charging hub, carrying case, and propellers for extended flight sessions.",
+    specs: {
+      flightTime: "Extended",
+      range: "N/A",
+      camera: "N/A",
+      weight: "0.8 kg"
+    },
+    inStock: true
+  },
+  {
+    id: "14",
+    name: "Fly More Kit - Mavic 3",
+    price: 549,
+    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
+    category: "Accessories",
+    description: "Professional accessory package including multiple batteries, charger hub, ND filters, and protective case for Mavic 3 series.",
+    specs: {
+      flightTime: "Extended",
+      range: "N/A",
+      camera: "N/A",
+      weight: "1.5 kg"
+    },
+    inStock: true
+  },
+  {
+    id: "15",
+    name: "DJI Goggles 3",
+    price: 799,
+    image: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=500&h=500&fit=crop",
+    category: "Accessories",
+    description: "Latest FPV goggles with micro-OLED screens, head tracking, and ultra-low latency for immersive drone flying experience.",
+    specs: {
+      flightTime: "2.5 hours",
+      range: "13.2 km",
+      camera: "N/A",
+      weight: "0.42 kg"
+    },
+    inStock: true
+  },
+  {
+    id: "16",
+    name: "Propeller Guards - Universal",
+    price: 39,
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop",
+    category: "Accessories",
+    description: "Protective propeller guards compatible with multiple drone models for safer indoor flying and collision protection.",
+    specs: {
+      flightTime: "N/A",
+      range: "N/A",
+      camera: "N/A",
+      weight: "0.1 kg"
     },
     inStock: true
   }

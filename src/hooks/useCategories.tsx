@@ -13,7 +13,8 @@ export const useCategories = () => {
   return useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      // Use type assertion to bypass TypeScript errors until types are regenerated
+      const { data, error } = await (supabase as any)
         .from('categories')
         .select('*')
         .order('name');

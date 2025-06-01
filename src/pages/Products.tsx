@@ -5,16 +5,32 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Eye, Heart, ShoppingCart, Filter } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { products } from '../data/products';
+import { useCart } from '../contexts/CartContext';
+import { useWishlist } from '../contexts/WishlistContext';
 import SearchBar from '../components/SearchBar';
 import ProductSkeleton from '../components/ProductSkeleton';
+import ProductFilters from '../components/ProductFilters';
+import QuickViewModal from '../components/QuickViewModal';
 import { useLoading } from '../hooks/useLoading';
+import { toast } from '@/hooks/use-toast';
+import { Product } from '../contexts/CartContext';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('name');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 15000]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [inStockOnly, setInStockOnly] = useState<boolean>(false);
+  const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  
   const { isLoading, startLoading, stopLoading } = useLoading(true);
+  const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   const categories = ['all', ...Array.from(new Set(products.map(p => p.category)))];
 
@@ -25,13 +41,26 @@ const Products = () => {
       stopLoading();
     }, 800);
     return () => clearTimeout(timer);
-  }, [selectedCategory, sortBy]);
+  }, [selectedCategory, sortBy, selectedCategories, priceRange, inStockOnly]);
 
   const filteredAndSearchedProducts = useMemo(() => {
-    let filtered = products.filter(product => 
-      selectedCategory === 'all' || product.category === selectedCategory
-    );
+    let filtered = products.filter(product => {
+      // Category filter
+      const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
+      
+      // Advanced category filters
+      const advancedCategoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
+      
+      // Price range filter
+      const priceMatch = product.price >= priceRange[0] && product.price <= priceRange[1];
+      
+      // Stock filter
+      const stockMatch = !inStockOnly || product.inStock;
+      
+      return categoryMatch && advancedCategoryMatch && priceMatch && stockMatch;
+    });
 
+    // Search filter
     if (searchQuery.trim()) {
       filtered = filtered.filter(product =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -40,6 +69,7 @@ const Products = () => {
       );
     }
 
+    // Sort
     return filtered.sort((a, b) => {
       switch (sortBy) {
         case 'price-low':
@@ -51,7 +81,57 @@ const Products = () => {
           return a.name.localeCompare(b.name);
       }
     });
-  }, [selectedCategory, sortBy, searchQuery]);
+  }, [selectedCategory, sortBy, searchQuery, priceRange, selectedCategories, inStockOnly]);
+
+  const handleCategoryChange = (category: string) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter(c => c !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
+
+  const handleClearFilters = () => {
+    setPriceRange([0, 15000]);
+    setSelectedCategories([]);
+    setInStockOnly(false);
+    setSelectedCategory('all');
+    setSearchQuery('');
+  };
+
+  const handleQuickAddToCart = (product: Product, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product);
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart.`,
+    });
+  };
+
+  const handleWishlistToggle = (product: Product, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+      toast({
+        title: "Removed from wishlist",
+        description: `${product.name} has been removed from your wishlist.`,
+      });
+    } else {
+      addToWishlist(product);
+      toast({
+        title: "Added to wishlist",
+        description: `${product.name} has been added to your wishlist.`,
+      });
+    }
+  };
+
+  const handleQuickView = (product: Product, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setQuickViewProduct(product);
+  };
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -69,119 +149,200 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-8">
-        <div className="flex-1">
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map(category => (
-                <SelectItem key={category} value={category}>
-                  {category === 'all' ? 'All Categories' : category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex-1">
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger>
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="name">Name</SelectItem>
-              <SelectItem value="price-low">Price: Low to High</SelectItem>
-              <SelectItem value="price-high">Price: High to Low</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Results Count */}
-      {searchQuery && !isLoading && (
-        <div className="mb-4">
-          <p className="text-slate-600">
-            Found {filteredAndSearchedProducts.length} result{filteredAndSearchedProducts.length !== 1 ? 's' : ''} for "{searchQuery}"
-          </p>
-        </div>
-      )}
-
-      {/* Products Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {isLoading ? (
-          // Show skeleton loading
-          Array.from({ length: 6 }).map((_, index) => (
-            <ProductSkeleton key={index} />
-          ))
-        ) : (
-          // Show actual products
-          filteredAndSearchedProducts.map((product) => (
-            <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative">
-                <img 
-                  src={product.image} 
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* Filters Sidebar */}
+        <div className="lg:col-span-1">
+          {/* Mobile Filter Toggle */}
+          <div className="lg:hidden mb-4">
+            <Collapsible open={filtersOpen} onOpenChange={setFiltersOpen}>
+              <CollapsibleTrigger asChild>
+                <Button variant="outline" className="w-full">
+                  <Filter className="mr-2 h-4 w-4" />
+                  Filters
+                </Button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="mt-4">
+                <ProductFilters
+                  priceRange={priceRange}
+                  onPriceRangeChange={setPriceRange}
+                  selectedCategories={selectedCategories}
+                  onCategoryChange={handleCategoryChange}
+                  inStockOnly={inStockOnly}
+                  onInStockChange={setInStockOnly}
+                  onClearFilters={handleClearFilters}
+                  categories={categories}
                 />
-                {!product.inStock && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                    <Badge variant="destructive">Out of Stock</Badge>
-                  </div>
-                )}
-              </div>
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-xl font-semibold">{product.name}</h3>
-                  <Badge variant="secondary">{product.category}</Badge>
-                </div>
-                <p className="text-slate-600 mb-4 line-clamp-2">{product.description}</p>
-                
-                <div className="space-y-2 mb-4 text-sm text-slate-600">
-                  <div className="flex justify-between">
-                    <span>Flight Time:</span>
-                    <span>{product.specs.flightTime}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Range:</span>
-                    <span>{product.specs.range}</span>
-                  </div>
-                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-blue-600">
-                    ${product.price.toLocaleString()}
-                  </span>
-                  <Button asChild disabled={!product.inStock}>
-                    <Link to={`/products/${product.id}`}>
-                      {product.inStock ? 'View Details' : 'Out of Stock'}
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </div>
+          {/* Desktop Filters */}
+          <div className="hidden lg:block">
+            <ProductFilters
+              priceRange={priceRange}
+              onPriceRangeChange={setPriceRange}
+              selectedCategories={selectedCategories}
+              onCategoryChange={handleCategoryChange}
+              inStockOnly={inStockOnly}
+              onInStockChange={setInStockOnly}
+              onClearFilters={handleClearFilters}
+              categories={categories}
+            />
+          </div>
+        </div>
 
-      {filteredAndSearchedProducts.length === 0 && !isLoading && (
-        <div className="text-center py-12">
-          <p className="text-xl text-slate-600">
-            {searchQuery ? `No products found for "${searchQuery}"` : 'No products found in this category.'}
-          </p>
-          {searchQuery && (
-            <Button 
-              variant="outline" 
-              onClick={() => setSearchQuery('')}
-              className="mt-4"
-            >
-              Clear Search
-            </Button>
+        {/* Products Content */}
+        <div className="lg:col-span-3">
+          {/* Basic Filters */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            <div className="flex-1">
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map(category => (
+                    <SelectItem key={category} value={category}>
+                      {category === 'all' ? 'All Categories' : category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex-1">
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name">Name</SelectItem>
+                  <SelectItem value="price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Results Count */}
+          {searchQuery && !isLoading && (
+            <div className="mb-4">
+              <p className="text-slate-600">
+                Found {filteredAndSearchedProducts.length} result{filteredAndSearchedProducts.length !== 1 ? 's' : ''} for "{searchQuery}"
+              </p>
+            </div>
+          )}
+
+          {/* Products Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {isLoading ? (
+              Array.from({ length: 6 }).map((_, index) => (
+                <ProductSkeleton key={index} />
+              ))
+            ) : (
+              filteredAndSearchedProducts.map((product) => (
+                <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow group">
+                  <div className="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    
+                    {/* Quick Action Buttons */}
+                    <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button
+                        size="icon"
+                        variant="secondary"
+                        className="h-8 w-8"
+                        onClick={(e) => handleQuickView(product, e)}
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="secondary"
+                        className={`h-8 w-8 ${isInWishlist(product.id) ? 'text-red-600' : ''}`}
+                        onClick={(e) => handleWishlistToggle(product, e)}
+                      >
+                        <Heart className={`h-4 w-4 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                      </Button>
+                    </div>
+
+                    {!product.inStock && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <Badge variant="destructive">Out of Stock</Badge>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="text-xl font-semibold">{product.name}</h3>
+                      <Badge variant="secondary">{product.category}</Badge>
+                    </div>
+                    <p className="text-slate-600 mb-4 line-clamp-2">{product.description}</p>
+                    
+                    <div className="space-y-2 mb-4 text-sm text-slate-600">
+                      <div className="flex justify-between">
+                        <span>Flight Time:</span>
+                        <span>{product.specs.flightTime}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Range:</span>
+                        <span>{product.specs.range}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold text-blue-600">
+                        ${product.price.toLocaleString()}
+                      </span>
+                      <div className="flex gap-2">
+                        <Button 
+                          size="sm"
+                          variant="outline"
+                          onClick={(e) => handleQuickAddToCart(product, e)}
+                          disabled={!product.inStock}
+                        >
+                          <ShoppingCart className="h-4 w-4" />
+                        </Button>
+                        <Button asChild size="sm" disabled={!product.inStock}>
+                          <Link to={`/products/${product.id}`}>
+                            {product.inStock ? 'Details' : 'Out of Stock'}
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            )}
+          </div>
+
+          {filteredAndSearchedProducts.length === 0 && !isLoading && (
+            <div className="text-center py-12">
+              <p className="text-xl text-slate-600">
+                {searchQuery ? `No products found for "${searchQuery}"` : 'No products found matching your filters.'}
+              </p>
+              <Button 
+                variant="outline" 
+                onClick={handleClearFilters}
+                className="mt-4"
+              >
+                Clear All Filters
+              </Button>
+            </div>
           )}
         </div>
-      )}
+      </div>
+
+      {/* Quick View Modal */}
+      <QuickViewModal
+        product={quickViewProduct}
+        isOpen={!!quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+      />
     </div>
   );
 };

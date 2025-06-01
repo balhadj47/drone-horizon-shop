@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Heart, Eye, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -17,12 +16,27 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
+  console.log('ProductCard rendering for product:', product.id);
+  
   const { addToCart } = useCart();
   const { state, addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   
-  // Add defensive check for state
-  const isProductInWishlist = state?.items ? isInWishlist(product.id) : false;
-  const { average, count } = getProductRating(product.id);
+  console.log('Wishlist state:', state);
+  
+  // Add defensive check for state and isInWishlist function
+  const isProductInWishlist = state?.items && isInWishlist ? isInWishlist(product.id) : false;
+  
+  // Add defensive check for getProductRating
+  let average = 0;
+  let count = 0;
+  
+  try {
+    const rating = getProductRating(product.id);
+    average = rating.average;
+    count = rating.count;
+  } catch (error) {
+    console.error('Error getting product rating:', error);
+  }
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -35,6 +49,12 @@ const ProductCard = ({ product, onQuickView }: ProductCardProps) => {
 
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.preventDefault();
+    
+    if (!addToWishlist || !removeFromWishlist) {
+      console.error('Wishlist functions not available');
+      return;
+    }
+    
     if (isProductInWishlist) {
       removeFromWishlist(product.id);
       toast({

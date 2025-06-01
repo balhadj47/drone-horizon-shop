@@ -2,10 +2,8 @@
 export interface Review {
   id: string;
   productId: string;
-  userId: string;
   userName: string;
   rating: number;
-  title: string;
   comment: string;
   date: string;
   verified: boolean;
@@ -15,79 +13,92 @@ export const reviews: Review[] = [
   {
     id: "1",
     productId: "1",
-    userId: "user1",
-    userName: "Mike Johnson",
+    userName: "Alex Johnson",
     rating: 5,
-    title: "Incredible performance and quality!",
-    comment: "This drone exceeded all my expectations. The camera quality is outstanding, and the flight stability is perfect. Highly recommended for professional photography.",
-    date: "2024-05-15",
+    comment: "Absolutely incredible drone! The camera quality is outstanding and the flight time is exactly as advertised. Perfect for professional photography.",
+    date: "2024-01-15",
     verified: true
   },
   {
     id: "2",
     productId: "1",
-    userId: "user2",
     userName: "Sarah Chen",
     rating: 4,
-    title: "Great drone, minor issues with battery",
-    comment: "Overall excellent drone with amazing features. The only downside is the battery life could be longer. Still worth every penny!",
-    date: "2024-05-10",
+    comment: "Great drone overall. The Hasselblad camera produces amazing shots. Only minor complaint is the learning curve for beginners.",
+    date: "2024-01-20",
     verified: true
   },
   {
     id: "3",
-    productId: "1",
-    userId: "user3",
-    userName: "David Rodriguez",
+    productId: "2",
+    userName: "Mike Rodriguez",
     rating: 5,
-    title: "Perfect for beginners and pros alike",
-    comment: "Easy to fly, fantastic camera, and the build quality is top-notch. Customer service was also very helpful.",
-    date: "2024-05-08",
-    verified: false
+    comment: "Perfect starter drone! Easy to fly and the 4K video quality is impressive for the price point. Highly recommend for beginners.",
+    date: "2024-01-18",
+    verified: true
   },
   {
     id: "4",
     productId: "2",
-    userId: "user4",
-    userName: "Emma Wilson",
+    userName: "Emily Davis",
     rating: 4,
-    title: "Solid entry-level drone",
-    comment: "Great value for money. Perfect for learning to fly drones. The camera is decent for the price point.",
-    date: "2024-05-12",
-    verified: true
+    comment: "Love how lightweight it is. Great for travel photography. Battery life could be better but overall very satisfied.",
+    date: "2024-01-22",
+    verified: false
   },
   {
     id: "5",
-    productId: "2",
-    userId: "user5",
-    userName: "Alex Thompson",
-    rating: 3,
-    title: "Good but has limitations",
-    comment: "Nice drone for beginners but the range is limited. Good for practicing in your backyard.",
-    date: "2024-05-05",
+    productId: "3",
+    userName: "Ryan Mitchell",
+    rating: 5,
+    comment: "Insane speed and agility! This drone is built for racing. The FPV experience is incredible. Worth every penny for competitive pilots.",
+    date: "2024-01-25",
     verified: true
   },
   {
     id: "6",
-    productId: "3",
-    userId: "user6",
-    userName: "Rachel Green",
+    productId: "4",
+    userName: "Corporate User",
     rating: 5,
-    title: "Racing beast!",
-    comment: "Incredibly fast and responsive. The speed is amazing and it handles turns perfectly. Built for racing enthusiasts.",
-    date: "2024-05-14",
+    comment: "Industrial grade quality. Perfect for our surveying operations. The dual-operator feature is a game changer for our workflow.",
+    date: "2024-01-28",
     verified: true
   }
 ];
 
-export const getProductReviews = (productId: string): Review[] => {
-  return reviews.filter(review => review.productId === productId);
+export const getProductRating = (productId: string) => {
+  console.log('Getting rating for product:', productId);
+  
+  try {
+    const productReviews = reviews.filter(review => review.productId === productId);
+    
+    if (productReviews.length === 0) {
+      console.log('No reviews found for product:', productId);
+      return { average: 0, count: 0 };
+    }
+    
+    const totalRating = productReviews.reduce((sum, review) => sum + review.rating, 0);
+    const average = Math.round((totalRating / productReviews.length) * 10) / 10;
+    
+    console.log('Rating calculation:', { productId, average, count: productReviews.length });
+    
+    return {
+      average,
+      count: productReviews.length
+    };
+  } catch (error) {
+    console.error('Error calculating product rating:', error);
+    return { average: 0, count: 0 };
+  }
 };
 
-export const getProductRating = (productId: string): { average: number; count: number } => {
-  const productReviews = getProductReviews(productId);
-  if (productReviews.length === 0) return { average: 0, count: 0 };
+export const getProductReviews = (productId: string) => {
+  console.log('Getting reviews for product:', productId);
   
-  const average = productReviews.reduce((sum, review) => sum + review.rating, 0) / productReviews.length;
-  return { average: Math.round(average * 10) / 10, count: productReviews.length };
+  try {
+    return reviews.filter(review => review.productId === productId);
+  } catch (error) {
+    console.error('Error getting product reviews:', error);
+    return [];
+  }
 };

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Drone } from 'lucide-react';
+import { ShoppingCart, Plane } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 
 interface LayoutProps {
@@ -20,7 +20,7 @@ const Layout = ({ children }: LayoutProps) => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center space-x-2">
-              <Drone className="h-8 w-8 text-blue-600" />
+              <Plane className="h-8 w-8 text-blue-600" />
               <span className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
                 SkyTech Drones
               </span>
@@ -63,7 +63,7 @@ const Layout = ({ children }: LayoutProps) => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <Drone className="h-6 w-6 text-blue-400" />
+              <Plane className="h-6 w-6 text-blue-400" />
               <span className="text-lg font-semibold">SkyTech Drones</span>
             </div>
             <p className="text-slate-400">

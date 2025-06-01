@@ -3,14 +3,14 @@ import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Filter } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { useProducts } from '../hooks/useProducts';
+import { useProducts, Product as DatabaseProduct } from '../hooks/useProducts';
 import { useCategories } from '../hooks/useCategories';
 import ProductsHeader from '../components/ProductsHeader';
 import ProductsMainFilters from '../components/ProductsMainFilters';
 import ProductsGrid from '../components/ProductsGrid';
 import ProductFilters from '../components/ProductFilters';
 import QuickViewModal from '../components/QuickViewModal';
-import { Product } from '../hooks/useProducts';
+import { Product as LegacyProduct } from '../contexts/CartContext';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -20,13 +20,30 @@ const Products = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [inStockOnly, setInStockOnly] = useState<boolean>(false);
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
-  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
+  const [quickViewProduct, setQuickViewProduct] = useState<LegacyProduct | null>(null);
 
   const { data: products = [], isLoading } = useProducts();
   const { data: categories = [] } = useCategories();
 
   // Convert category names for compatibility with existing filter logic
   const categoryNames = ['all', ...categories.map(cat => cat.name)];
+
+  // Convert database product to legacy format for compatibility
+  const convertDatabaseProductToLegacy = (product: DatabaseProduct): LegacyProduct => ({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    category: product.category?.name || 'Unknown',
+    image: product.image_url || '/placeholder.svg',
+    inStock: product.in_stock,
+    specs: {
+      flightTime: product.specifications?.max_flight_time || 'N/A',
+      range: product.specifications?.range || 'N/A',
+      camera: product.specifications?.camera_resolution || 'N/A',
+      weight: product.specifications?.weight || 'N/A'
+    }
+  });
 
   const filteredAndSearchedProducts = useMemo(() => {
     let filtered = products.filter(product => {
@@ -84,28 +101,14 @@ const Products = () => {
     setSearchQuery('');
   };
 
-  const handleQuickView = (product: Product, e: React.MouseEvent) => {
+  const handleQuickView = (product: LegacyProduct, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setQuickViewProduct(product);
   };
 
-  // Convert database product to legacy format for compatibility
-  const convertedProducts = filteredAndSearchedProducts.map(product => ({
-    id: product.id,
-    name: product.name,
-    description: product.description,
-    price: product.price,
-    category: product.category?.name || 'Unknown',
-    image: product.image_url || '/placeholder.svg',
-    inStock: product.in_stock,
-    specs: {
-      flightTime: product.specifications?.max_flight_time || 'N/A',
-      range: product.specifications?.range || 'N/A',
-      camera: product.specifications?.camera_resolution || 'N/A',
-      weight: product.specifications?.weight || 'N/A'
-    }
-  }));
+  // Convert filtered products to legacy format
+  const convertedProducts = filteredAndSearchedProducts.map(convertDatabaseProductToLegacy);
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">

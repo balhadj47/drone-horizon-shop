@@ -84,7 +84,7 @@ const About = () => {
             </div>
             <div>
               <h3 className="font-medium mb-2">Phone</h3>
-              <p>1-800-DRONES</p>
+              <p>+12088081919</p>
             </div>
             <div>
               <h3 className="font-medium mb-2">Hours</h3>

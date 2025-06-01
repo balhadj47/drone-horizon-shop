@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Shield, Truck, Zap, CheckCircle } from 'lucide-react';
@@ -35,8 +36,10 @@ const Index = () => {
                     Shop Now <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button size="lg" className="bg-white text-slate-900 hover:bg-slate-100 font-semibold px-8 py-4 text-lg shadow-2xl transition-all duration-300 transform hover:scale-105">
-                  Learn More
+                <Button size="lg" asChild className="bg-white text-slate-900 hover:bg-slate-100 font-semibold px-8 py-4 text-lg shadow-2xl transition-all duration-300 transform hover:scale-105">
+                  <Link to="/shipping-returns">
+                    Learn More
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -99,7 +102,7 @@ const Index = () => {
               </div>
               <h3 className="text-xl font-semibold mb-3 text-slate-900">Fast Delivery</h3>
               <p className="text-slate-600 leading-relaxed">
-                Quick and secure shipping worldwide to get your drone in the air as soon as possible.
+                Quick and secure shipping to UK, EU & Canada. Free shipping on orders over £500.
               </p>
             </div>
           </div>
@@ -150,7 +153,7 @@ const Index = () => {
                   
                   <div className="flex items-center justify-between">
                     <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                      ${product.price.toLocaleString()}
+                      £{product.price.toLocaleString()}
                     </span>
                     
                     <Button asChild className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/25">

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -129,18 +130,18 @@ const Checkout = () => {
                   <Input
                     id="city"
                     name="city"
-                    placeholder="New York"
+                    placeholder="London"
                     required
                     value={formData.city}
                     onChange={handleInputChange}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="zipCode">ZIP Code</Label>
+                  <Label htmlFor="zipCode">Postcode</Label>
                   <Input
                     id="zipCode"
                     name="zipCode"
-                    placeholder="10001"
+                    placeholder="SW1A 1AA"
                     required
                     value={formData.zipCode}
                     onChange={handleInputChange}
@@ -178,7 +179,8 @@ const Checkout = () => {
                   <h3 className="font-semibold text-blue-900 mb-2">💳 Express Payment</h3>
                   <p className="text-blue-700 text-sm">
                     {isGuest ? 'Quick guest checkout' : 'Secure account creation'} • 
-                    {shippingCost === 0 ? ' Free shipping' : ` $${shippingCost} shipping`}
+                    {shippingCost === 0 ? ' Free shipping' : ` £${shippingCost} shipping`} •
+                    Powered by Stripe, Wise & Banky
                   </p>
                 </CardContent>
               </Card>
@@ -189,7 +191,7 @@ const Checkout = () => {
                 size="lg"
                 disabled={isProcessing}
               >
-                {isProcessing ? 'Processing...' : `Complete Order - $${finalTotal.toLocaleString()}`}
+                {isProcessing ? 'Processing...' : `Complete Order - £${finalTotal.toLocaleString()}`}
               </Button>
             </form>
           </CardContent>
@@ -215,7 +217,7 @@ const Checkout = () => {
                     <h4 className="font-medium">{item.name}</h4>
                     <p className="text-sm text-slate-600">Qty: {item.quantity}</p>
                     <p className="font-semibold text-blue-600">
-                      ${(item.price * item.quantity).toLocaleString()}
+                      £{(item.price * item.quantity).toLocaleString()}
                     </p>
                   </div>
                 </div>
@@ -224,19 +226,19 @@ const Checkout = () => {
               <div className="border-t pt-4 space-y-2">
                 <div className="flex justify-between text-sm text-slate-600">
                   <span>Subtotal</span>
-                  <span>${state.total.toLocaleString()}</span>
+                  <span>£{state.total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className={shippingCost === 0 ? "text-green-600" : "text-slate-600"}>
                     Shipping
                   </span>
                   <span className={shippingCost === 0 ? "text-green-600" : "text-slate-600"}>
-                    {shippingCost === 0 ? 'FREE' : `$${shippingCost}`}
+                    {shippingCost === 0 ? 'FREE' : `£${shippingCost}`}
                   </span>
                 </div>
                 {shippingCost === 0 && (
                   <div className="text-xs text-green-600">
-                    🎉 You saved $49 on shipping!
+                    🎉 You saved £49 on shipping!
                   </div>
                 )}
                 <div className="flex justify-between text-sm text-slate-600">
@@ -245,7 +247,7 @@ const Checkout = () => {
                 </div>
                 <div className="flex justify-between text-lg font-semibold border-t pt-2">
                   <span>Total</span>
-                  <span className="text-blue-600">${finalTotal.toLocaleString()}</span>
+                  <span className="text-blue-600">£{finalTotal.toLocaleString()}</span>
                 </div>
               </div>
             </div>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, Zap, Mail, Phone, MapPin, Heart } from 'lucide-react';
@@ -96,8 +97,13 @@ const Layout = ({ children }: LayoutProps) => {
                 </div>
                 <span className="text-lg font-semibold">Manificos</span>
               </div>
-              <p className="text-slate-400 text-sm">
+              <p className="text-slate-400 text-sm mb-4">
                 Premium drones and accessories for professionals and enthusiasts worldwide.
+              </p>
+              <p className="text-slate-400 text-xs">
+                Manificos Ltd | Company No. 15909085<br />
+                71-75 Shelton Street, Covent Garden<br />
+                London, WC2H 9JQ, United Kingdom
               </p>
             </div>
 
@@ -107,16 +113,17 @@ const Layout = ({ children }: LayoutProps) => {
                 <li><Link to="/products" className="hover:text-white transition-colors">Products</Link></li>
                 <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
                 <li><Link to="/cart" className="hover:text-white transition-colors">Cart</Link></li>
+                <li><Link to="/shipping-returns" className="hover:text-white transition-colors">Shipping & Returns</Link></li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Support</h3>
+              <h3 className="font-semibold mb-4">Legal</h3>
               <ul className="space-y-2 text-sm text-slate-400">
-                <li>Shipping & Returns</li>
-                <li>FAQ</li>
-                <li>Warranty</li>
-                <li>Support Center</li>
+                <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link to="/shipping-returns" className="hover:text-white transition-colors">Returns Policy</Link></li>
+                <li><Link to="/warranty" className="hover:text-white transition-colors">Warranty</Link></li>
               </ul>
             </div>
 
@@ -125,22 +132,22 @@ const Layout = ({ children }: LayoutProps) => {
               <div className="space-y-3 text-sm text-slate-400">
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4" />
-                  <span>support@manificos.com</span>
+                  <span>contact@manificos.com</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="h-4 w-4" />
-                  <span>1-800-DRONES</span>
+                  <span>+12088081919</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
-                  <span>Mon-Fri 9AM-6PM EST</span>
+                  <span>24/7 Support Available</span>
                 </div>
               </div>
             </div>
           </div>
           
           <div className="border-t border-slate-700 mt-8 pt-8 text-center text-sm text-slate-400">
-            <p>&copy; 2024 Manificos. All rights reserved.</p>
+            <p>&copy; 2024 Manificos Ltd. All rights reserved. | Payment powered by Stripe, Wise & Banky</p>
           </div>
         </div>
       </footer>

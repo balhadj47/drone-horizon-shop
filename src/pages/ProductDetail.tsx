@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, Check } from 'lucide-react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft, ShoppingCart, Check, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,6 +12,7 @@ import { toast } from '@/hooks/use-toast';
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   
   const product = products.find(p => p.id === id);
 
@@ -37,6 +38,11 @@ const ProductDetail = () => {
       title: "Added to cart",
       description: `${product.name} has been added to your cart.`,
     });
+  };
+
+  const handleBuyNow = () => {
+    addToCart(product);
+    navigate('/checkout');
   };
 
   return (
@@ -75,6 +81,42 @@ const ProductDetail = () => {
             </p>
           </div>
 
+          {/* Stock Status & Purchase Buttons */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              {product.inStock ? (
+                <>
+                  <Check className="h-5 w-5 text-green-600" />
+                  <span className="text-green-600 font-medium">In Stock - Free Shipping</span>
+                </>
+              ) : (
+                <Badge variant="destructive">Out of Stock</Badge>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Button 
+                size="lg" 
+                onClick={handleAddToCart}
+                disabled={!product.inStock}
+                variant="outline"
+              >
+                <ShoppingCart className="mr-2 h-5 w-5" />
+                Add to Cart
+              </Button>
+              
+              <Button 
+                size="lg" 
+                onClick={handleBuyNow}
+                disabled={!product.inStock}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                <Zap className="mr-2 h-5 w-5" />
+                Buy Now
+              </Button>
+            </div>
+          </div>
+
           {/* Specifications */}
           <Card>
             <CardContent className="p-6">
@@ -99,30 +141,6 @@ const ProductDetail = () => {
               </div>
             </CardContent>
           </Card>
-
-          {/* Stock Status & Add to Cart */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              {product.inStock ? (
-                <>
-                  <Check className="h-5 w-5 text-green-600" />
-                  <span className="text-green-600 font-medium">In Stock</span>
-                </>
-              ) : (
-                <Badge variant="destructive">Out of Stock</Badge>
-              )}
-            </div>
-
-            <Button 
-              size="lg" 
-              className="w-full" 
-              onClick={handleAddToCart}
-              disabled={!product.inStock}
-            >
-              <ShoppingCart className="mr-2 h-5 w-5" />
-              {product.inStock ? 'Add to Cart' : 'Out of Stock'}
-            </Button>
-          </div>
 
           {/* Features */}
           <Card>

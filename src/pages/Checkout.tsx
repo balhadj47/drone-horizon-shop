@@ -14,13 +14,10 @@ const Checkout = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
-    phone: '',
+    name: '',
     address: '',
     city: '',
-    state: '',
     zipCode: '',
   });
 
@@ -36,7 +33,7 @@ const Checkout = () => {
     setIsProcessing(true);
 
     // Simulate payment processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     toast({
       title: "Order placed successfully!",
@@ -54,45 +51,23 @@ const Checkout = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-slate-900 mb-8">Checkout</h1>
+      <h1 className="text-3xl font-bold text-slate-900 mb-8">Quick Checkout</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Checkout Form */}
+        {/* Simplified Checkout Form */}
         <Card>
           <CardHeader>
-            <CardTitle>Shipping Information</CardTitle>
+            <CardTitle>Delivery Details</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input
-                    id="firstName"
-                    name="firstName"
-                    required
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input
-                    id="lastName"
-                    name="lastName"
-                    required
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-
               <div>
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
+                  placeholder="your@email.com"
                   required
                   value={formData.email}
                   onChange={handleInputChange}
@@ -100,13 +75,13 @@ const Checkout = () => {
               </div>
 
               <div>
-                <Label htmlFor="phone">Phone Number</Label>
+                <Label htmlFor="name">Full Name</Label>
                 <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
+                  id="name"
+                  name="name"
+                  placeholder="John Doe"
                   required
-                  value={formData.phone}
+                  value={formData.name}
                   onChange={handleInputChange}
                 />
               </div>
@@ -116,30 +91,22 @@ const Checkout = () => {
                 <Input
                   id="address"
                   name="address"
+                  placeholder="123 Main Street"
                   required
                   value={formData.address}
                   onChange={handleInputChange}
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="city">City</Label>
                   <Input
                     id="city"
                     name="city"
+                    placeholder="New York"
                     required
                     value={formData.city}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="state">State</Label>
-                  <Input
-                    id="state"
-                    name="state"
-                    required
-                    value={formData.state}
                     onChange={handleInputChange}
                   />
                 </div>
@@ -148,6 +115,7 @@ const Checkout = () => {
                   <Input
                     id="zipCode"
                     name="zipCode"
+                    placeholder="10001"
                     required
                     value={formData.zipCode}
                     onChange={handleInputChange}
@@ -157,9 +125,9 @@ const Checkout = () => {
 
               <Card className="bg-blue-50 border-blue-200">
                 <CardContent className="p-4">
-                  <h3 className="font-semibold text-blue-900 mb-2">Payment Method</h3>
+                  <h3 className="font-semibold text-blue-900 mb-2">💳 Express Payment</h3>
                   <p className="text-blue-700 text-sm">
-                    Payment will be processed securely through Banky.io
+                    Secure 1-click payment • Free shipping over $500
                   </p>
                 </CardContent>
               </Card>
@@ -170,7 +138,7 @@ const Checkout = () => {
                 size="lg"
                 disabled={isProcessing}
               >
-                {isProcessing ? 'Processing...' : `Pay Now - $${state.total.toLocaleString()}`}
+                {isProcessing ? 'Processing...' : `Complete Order - $${state.total.toLocaleString()}`}
               </Button>
             </form>
           </CardContent>
@@ -179,7 +147,7 @@ const Checkout = () => {
         {/* Order Summary */}
         <Card className="h-fit">
           <CardHeader>
-            <CardTitle>Order Summary</CardTitle>
+            <CardTitle>Order Summary ({state.items.length} items)</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -194,7 +162,7 @@ const Checkout = () => {
                   </div>
                   <div className="flex-1">
                     <h4 className="font-medium">{item.name}</h4>
-                    <p className="text-sm text-slate-600">Quantity: {item.quantity}</p>
+                    <p className="text-sm text-slate-600">Qty: {item.quantity}</p>
                     <p className="font-semibold text-blue-600">
                       ${(item.price * item.quantity).toLocaleString()}
                     </p>
@@ -202,8 +170,16 @@ const Checkout = () => {
                 </div>
               ))}
               
-              <div className="border-t pt-4">
-                <div className="flex justify-between text-lg font-semibold">
+              <div className="border-t pt-4 space-y-2">
+                <div className="flex justify-between text-sm text-slate-600">
+                  <span>Subtotal</span>
+                  <span>${state.total.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>Shipping</span>
+                  <span>FREE</span>
+                </div>
+                <div className="flex justify-between text-lg font-semibold border-t pt-2">
                   <span>Total</span>
                   <span className="text-blue-600">${state.total.toLocaleString()}</span>
                 </div>

@@ -118,7 +118,7 @@ const Wishlist = () => {
                 
                 <div className="flex items-center justify-between">
                   <span className="text-xl font-bold text-blue-600">
-                    ${product.price.toLocaleString()}
+                    £{product.price.toLocaleString()}
                   </span>
                   
                   <Button

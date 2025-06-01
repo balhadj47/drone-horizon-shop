@@ -1,53 +1,46 @@
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Filter } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { products } from '../data/products';
-import { useLoading } from '../hooks/useLoading';
-import { Product } from '../contexts/CartContext';
+import { useProducts } from '../hooks/useProducts';
+import { useCategories } from '../hooks/useCategories';
 import ProductsHeader from '../components/ProductsHeader';
 import ProductsMainFilters from '../components/ProductsMainFilters';
 import ProductsGrid from '../components/ProductsGrid';
 import ProductFilters from '../components/ProductFilters';
 import QuickViewModal from '../components/QuickViewModal';
+import { Product } from '../hooks/useProducts';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('name');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 15000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [inStockOnly, setInStockOnly] = useState<boolean>(false);
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  
-  const { isLoading, startLoading, stopLoading } = useLoading(true);
 
-  const categories = ['all', ...Array.from(new Set(products.map(p => p.category)))];
+  const { data: products = [], isLoading } = useProducts();
+  const { data: categories = [] } = useCategories();
 
-  // Simulate loading for better UX
-  useEffect(() => {
-    startLoading();
-    const timer = setTimeout(() => {
-      stopLoading();
-    }, 800);
-    return () => clearTimeout(timer);
-  }, [selectedCategory, sortBy, selectedCategories, priceRange, inStockOnly]);
+  // Convert category names for compatibility with existing filter logic
+  const categoryNames = ['all', ...categories.map(cat => cat.name)];
 
   const filteredAndSearchedProducts = useMemo(() => {
     let filtered = products.filter(product => {
       // Category filter
-      const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
+      const categoryMatch = selectedCategory === 'all' || product.category?.name === selectedCategory;
       
       // Advanced category filters
-      const advancedCategoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
+      const advancedCategoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category?.name || '');
       
       // Price range filter
       const priceMatch = product.price >= priceRange[0] && product.price <= priceRange[1];
       
       // Stock filter
-      const stockMatch = !inStockOnly || product.inStock;
+      const stockMatch = !inStockOnly || product.in_stock;
       
       return categoryMatch && advancedCategoryMatch && priceMatch && stockMatch;
     });
@@ -57,7 +50,7 @@ const Products = () => {
       filtered = filtered.filter(product =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchQuery.toLowerCase())
+        (product.category?.name || '').toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
@@ -73,7 +66,7 @@ const Products = () => {
           return a.name.localeCompare(b.name);
       }
     });
-  }, [selectedCategory, sortBy, searchQuery, priceRange, selectedCategories, inStockOnly]);
+  }, [products, selectedCategory, sortBy, searchQuery, priceRange, selectedCategories, inStockOnly]);
 
   const handleCategoryChange = (category: string) => {
     if (selectedCategories.includes(category)) {
@@ -84,7 +77,7 @@ const Products = () => {
   };
 
   const handleClearFilters = () => {
-    setPriceRange([0, 15000]);
+    setPriceRange([0, 2000]);
     setSelectedCategories([]);
     setInStockOnly(false);
     setSelectedCategory('all');
@@ -96,6 +89,23 @@ const Products = () => {
     e.stopPropagation();
     setQuickViewProduct(product);
   };
+
+  // Convert database product to legacy format for compatibility
+  const convertedProducts = filteredAndSearchedProducts.map(product => ({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    category: product.category?.name || 'Unknown',
+    image: product.image_url || '/placeholder.svg',
+    inStock: product.in_stock,
+    specs: {
+      flightTime: product.specifications?.max_flight_time || 'N/A',
+      range: product.specifications?.range || 'N/A',
+      camera: product.specifications?.camera_resolution || 'N/A',
+      weight: product.specifications?.weight || 'N/A'
+    }
+  }));
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -122,7 +132,7 @@ const Products = () => {
                   inStockOnly={inStockOnly}
                   onInStockChange={setInStockOnly}
                   onClearFilters={handleClearFilters}
-                  categories={categories}
+                  categories={categoryNames}
                 />
               </CollapsibleContent>
             </Collapsible>
@@ -138,7 +148,7 @@ const Products = () => {
               inStockOnly={inStockOnly}
               onInStockChange={setInStockOnly}
               onClearFilters={handleClearFilters}
-              categories={categories}
+              categories={categoryNames}
             />
           </div>
         </div>
@@ -150,20 +160,20 @@ const Products = () => {
             onCategoryChange={setSelectedCategory}
             sortBy={sortBy}
             onSortChange={setSortBy}
-            categories={categories}
+            categories={categoryNames}
           />
 
           {/* Results Count */}
           {searchQuery && !isLoading && (
             <div className="mb-4">
               <p className="text-slate-600">
-                Found {filteredAndSearchedProducts.length} result{filteredAndSearchedProducts.length !== 1 ? 's' : ''} for "{searchQuery}"
+                Found {convertedProducts.length} result{convertedProducts.length !== 1 ? 's' : ''} for "{searchQuery}"
               </p>
             </div>
           )}
 
           <ProductsGrid
-            products={filteredAndSearchedProducts}
+            products={convertedProducts}
             isLoading={isLoading}
             searchQuery={searchQuery}
             onQuickView={handleQuickView}

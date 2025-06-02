@@ -20,6 +20,7 @@ const Checkout = lazy(() => import("./pages/Checkout"));
 const Success = lazy(() => import("./pages/Success"));
 const About = lazy(() => import("./pages/About"));
 const Auth = lazy(() => import("./pages/Auth"));
+const Account = lazy(() => import("./pages/Account"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const ShippingReturns = lazy(() => import("./pages/ShippingReturns"));
@@ -62,6 +63,7 @@ const App = () => (
                       <Route path="/success" element={<Success />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/auth" element={<Auth />} />
+                      <Route path="/account" element={<Account />} />
                       
                       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                       <Route path="/terms-of-service" element={<TermsOfService />} />

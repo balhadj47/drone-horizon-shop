@@ -76,6 +76,9 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
     onSubmit(formData);
   };
 
+  // Check if user has complete profile data
+  const hasCompleteProfile = user && profile && profile.full_name && profile.email && profile.address;
+
   return (
     <Card>
       <CardHeader>
@@ -98,6 +101,9 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
             </button>
           </div>
         )}
+        {hasCompleteProfile && (
+          <p className="text-sm text-green-600">✓ Using your saved profile information</p>
+        )}
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -111,6 +117,8 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
               required
               value={formData.email}
               onChange={handleInputChange}
+              readOnly={hasCompleteProfile}
+              className={hasCompleteProfile ? 'bg-gray-50' : ''}
             />
           </div>
 
@@ -123,6 +131,8 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
               required
               value={formData.name}
               onChange={handleInputChange}
+              readOnly={hasCompleteProfile}
+              className={hasCompleteProfile ? 'bg-gray-50' : ''}
             />
           </div>
 
@@ -138,6 +148,8 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
                 required
                 value={formData.street}
                 onChange={handleInputChange}
+                readOnly={hasCompleteProfile}
+                className={hasCompleteProfile ? 'bg-gray-50' : ''}
               />
             </div>
 
@@ -151,6 +163,8 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
                   required
                   value={formData.city}
                   onChange={handleInputChange}
+                  readOnly={hasCompleteProfile}
+                  className={hasCompleteProfile ? 'bg-gray-50' : ''}
                 />
               </div>
               <div>
@@ -162,6 +176,8 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
                   required
                   value={formData.state}
                   onChange={handleInputChange}
+                  readOnly={hasCompleteProfile}
+                  className={hasCompleteProfile ? 'bg-gray-50' : ''}
                 />
               </div>
             </div>
@@ -176,6 +192,8 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
                   required
                   value={formData.postalCode}
                   onChange={handleInputChange}
+                  readOnly={hasCompleteProfile}
+                  className={hasCompleteProfile ? 'bg-gray-50' : ''}
                 />
               </div>
               <div>
@@ -187,6 +205,8 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
                   required
                   value={formData.country}
                   onChange={handleInputChange}
+                  readOnly={hasCompleteProfile}
+                  className={hasCompleteProfile ? 'bg-gray-50' : ''}
                 />
               </div>
             </div>

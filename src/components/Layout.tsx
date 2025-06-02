@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, Heart, User, LogOut, Search, Menu, X } from 'lucide-react';
@@ -8,6 +9,7 @@ import { useCart } from '../contexts/CartContext';
 import { useWishlist } from '../contexts/WishlistContext';
 import { useAuth } from '../hooks/useAuth';
 import MobileNav from './MobileNav';
+import ManificosLogo from './ManificosLogo';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,11 +32,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">S</span>
-              </div>
-              <span className="font-bold text-xl text-gray-900">SkyStore</span>
+            <Link to="/" className="flex items-center space-x-3">
+              <ManificosLogo size="md" />
+              <span className="font-bold text-2xl bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                Manificos
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -131,11 +133,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">S</span>
-                </div>
-                <span className="font-bold text-xl">SkyStore</span>
+              <div className="flex items-center space-x-3 mb-4">
+                <ManificosLogo size="md" className="brightness-0 invert" />
+                <span className="font-bold text-xl text-white">Manificos</span>
               </div>
               <p className="text-gray-400">
                 Your trusted partner for professional and consumer drones.
@@ -164,7 +164,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div>
               <h3 className="font-semibold mb-4">Contact</h3>
               <ul className="space-y-2 text-gray-400">
-                <li>Email: support@skystore.com</li>
+                <li>Email: support@manificos.com</li>
                 <li>Phone: +44 20 1234 5678</li>
                 <li>Hours: Mon-Fri 9AM-6PM GMT</li>
               </ul>
@@ -172,7 +172,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 SkyStore. All rights reserved.</p>
+            <p>&copy; 2024 Manificos. All rights reserved.</p>
           </div>
         </div>
       </footer>

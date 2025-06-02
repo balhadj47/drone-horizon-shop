@@ -247,7 +247,7 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
                     className="bg-gray-50"
                   />
                 ) : (
-                  <Select value={formData.country} onValueChange={handleCountryChange} required>
+                  <Select value={formData.country} onValueChange={handleCountryChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select country" />
                     </SelectTrigger>

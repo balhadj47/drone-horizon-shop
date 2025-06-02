@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Loader2 } from 'lucide-react';
 
 interface Profile {
@@ -20,6 +20,38 @@ interface ProfileFormProps {
 }
 
 const ProfileForm = ({ profile, onUpdate }: ProfileFormProps) => {
+  const countries = [
+    { value: 'Canada', label: 'Canada' },
+    { value: 'United States', label: 'United States' },
+    { value: 'Austria', label: 'Austria' },
+    { value: 'Belgium', label: 'Belgium' },
+    { value: 'Bulgaria', label: 'Bulgaria' },
+    { value: 'Croatia', label: 'Croatia' },
+    { value: 'Cyprus', label: 'Cyprus' },
+    { value: 'Czech Republic', label: 'Czech Republic' },
+    { value: 'Denmark', label: 'Denmark' },
+    { value: 'Estonia', label: 'Estonia' },
+    { value: 'Finland', label: 'Finland' },
+    { value: 'France', label: 'France' },
+    { value: 'Germany', label: 'Germany' },
+    { value: 'Greece', label: 'Greece' },
+    { value: 'Hungary', label: 'Hungary' },
+    { value: 'Ireland', label: 'Ireland' },
+    { value: 'Italy', label: 'Italy' },
+    { value: 'Latvia', label: 'Latvia' },
+    { value: 'Lithuania', label: 'Lithuania' },
+    { value: 'Luxembourg', label: 'Luxembourg' },
+    { value: 'Malta', label: 'Malta' },
+    { value: 'Netherlands', label: 'Netherlands' },
+    { value: 'Poland', label: 'Poland' },
+    { value: 'Portugal', label: 'Portugal' },
+    { value: 'Romania', label: 'Romania' },
+    { value: 'Slovakia', label: 'Slovakia' },
+    { value: 'Slovenia', label: 'Slovenia' },
+    { value: 'Spain', label: 'Spain' },
+    { value: 'Sweden', label: 'Sweden' },
+  ];
+
   // Parse existing address or use empty values
   const parseAddress = (address: string | null) => {
     if (!address) return { street: '', city: '', state: '', postalCode: '', country: '' };
@@ -82,6 +114,10 @@ const ProfileForm = ({ profile, onUpdate }: ProfileFormProps) => {
 
   const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleCountryChange = (value: string) => {
+    setFormData(prev => ({ ...prev, country: value }));
   };
 
   return (
@@ -170,12 +206,18 @@ const ProfileForm = ({ profile, onUpdate }: ProfileFormProps) => {
               
               <div className="space-y-2">
                 <Label htmlFor="country">Country</Label>
-                <Input
-                  id="country"
-                  value={formData.country}
-                  onChange={(e) => handleChange('country', e.target.value)}
-                  placeholder="Enter your country"
-                />
+                <Select value={formData.country} onValueChange={handleCountryChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select country" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {countries.map((country) => (
+                      <SelectItem key={country.value} value={country.value}>
+                        {country.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>

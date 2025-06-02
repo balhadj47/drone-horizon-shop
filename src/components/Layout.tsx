@@ -47,6 +47,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <Link to="/products" className={`hover:text-blue-600 transition-colors ${location.pathname === '/products' ? 'text-blue-600 font-medium' : 'text-gray-700'}`}>
                 Products
               </Link>
+              <Link to="/scanner" className={`hover:text-blue-600 transition-colors ${location.pathname === '/scanner' ? 'text-blue-600 font-medium' : 'text-gray-700'}`}>
+                Scanner
+              </Link>
               <Link to="/about" className={`hover:text-blue-600 transition-colors ${location.pathname === '/about' ? 'text-blue-600 font-medium' : 'text-gray-700'}`}>
                 About
               </Link>

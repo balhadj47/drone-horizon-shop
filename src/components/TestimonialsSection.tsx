@@ -2,35 +2,35 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Star, Quote } from 'lucide-react';
-
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    role: "Professional Photographer",
-    content: "The DJI Mavic 3 Pro has revolutionized my aerial photography business. The camera quality is absolutely stunning!",
-    rating: 5,
-    image: "/placeholder.svg"
-  },
-  {
-    id: 2,
-    name: "Mike Chen",
-    role: "Content Creator",
-    content: "Amazing customer service and lightning-fast delivery. My DJI Mini 4K arrived perfectly packaged and ready to fly.",
-    rating: 5,
-    image: "/placeholder.svg"
-  },
-  {
-    id: 3,
-    name: "Emma Wilson",
-    role: "Real Estate Agent",
-    content: "These drones have taken my property listings to the next level. Clients love the aerial footage!",
-    rating: 5,
-    image: "/placeholder.svg"
-  }
-];
+import { useTestimonials } from '../hooks/useTestimonials';
 
 const TestimonialsSection = () => {
+  const { data: testimonials = [], isLoading } = useTestimonials();
+
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-gradient-to-b from-white to-blue-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+              What Our Customers Say
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Don't just take our word for it - hear from thousands of satisfied customers worldwide.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div key={index} className="animate-pulse">
+                <div className="bg-gray-200 h-48 rounded-lg"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-20 bg-gradient-to-b from-white to-blue-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,7 +62,7 @@ const TestimonialsSection = () => {
                 
                 <div className="flex items-center">
                   <img 
-                    src={testimonial.image} 
+                    src={testimonial.image_url} 
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full mr-4 bg-slate-200"
                   />

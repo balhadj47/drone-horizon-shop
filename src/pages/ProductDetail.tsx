@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Check, Zap, Shield, Clock } from 'lucide-react';
@@ -104,11 +103,11 @@ const ProductDetail = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
         {/* Product Image */}
-        <div className="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg overflow-hidden">
+        <div className="w-full h-96 lg:h-[500px] bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg overflow-hidden flex items-center justify-center p-8">
           <img 
             src={product.image_url || '/placeholder.svg'} 
             alt={product.name}
-            className="w-full h-full object-cover"
+            className="max-w-full max-h-full object-contain"
           />
         </div>
 

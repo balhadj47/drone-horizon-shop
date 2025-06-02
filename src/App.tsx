@@ -16,6 +16,7 @@ import Success from '@/pages/Success';
 import Auth from '@/pages/Auth';
 import Account from '@/pages/Account';
 import About from '@/pages/About';
+import NotFound from '@/pages/NotFound';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <Layout><About /></Layout>,
+  },
+  {
+    path: "*",
+    element: <Layout><NotFound /></Layout>,
   },
 ]);
 

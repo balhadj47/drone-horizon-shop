@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Heart, User, LogOut, Settings } from 'lucide-react';
@@ -29,14 +30,6 @@ const MobileNav = ({ user, onSignOut, onClose, cartItemsCount, wishlistItemsCoun
           onClick={onClose}
         >
           <span>Products</span>
-        </Link>
-
-        <Link 
-          to="/scanner" 
-          className="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-colors"
-          onClick={onClose}
-        >
-          <span>Scanner</span>
         </Link>
         
         <Link 

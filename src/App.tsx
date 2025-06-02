@@ -14,7 +14,6 @@ import Success from '@/pages/Success';
 import Auth from '@/pages/Auth';
 import Account from '@/pages/Account';
 import About from '@/pages/About';
-import WebsiteScannerPage from './pages/WebsiteScanner';
 
 const router = createBrowserRouter([
   {
@@ -56,10 +55,6 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <Layout><About /></Layout>,
-  },
-  {
-    path: "/scanner",
-    element: <Layout><WebsiteScannerPage /></Layout>,
   },
 ]);
 

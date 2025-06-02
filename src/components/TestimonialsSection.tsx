@@ -5,7 +5,11 @@ import { Star, Quote } from 'lucide-react';
 import { useTestimonials } from '../hooks/useTestimonials';
 
 const TestimonialsSection = () => {
-  const { data: testimonials = [], isLoading } = useTestimonials();
+  const { data: testimonials = [], isLoading, error } = useTestimonials();
+
+  console.log('Testimonials data:', testimonials);
+  console.log('Testimonials loading:', isLoading);
+  console.log('Testimonials error:', error);
 
   if (isLoading) {
     return (
@@ -31,6 +35,47 @@ const TestimonialsSection = () => {
     );
   }
 
+  if (error) {
+    console.error('Testimonials error:', error);
+    return (
+      <section className="py-20 bg-gradient-to-b from-white to-blue-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+              What Our Customers Say
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Don't just take our word for it - hear from thousands of satisfied customers worldwide.
+            </p>
+          </div>
+          <div className="text-center text-red-600">
+            Error loading testimonials: {error.message}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!testimonials || testimonials.length === 0) {
+    return (
+      <section className="py-20 bg-gradient-to-b from-white to-blue-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+              What Our Customers Say
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Don't just take our word for it - hear from thousands of satisfied customers worldwide.
+            </p>
+          </div>
+          <div className="text-center text-slate-600">
+            No testimonials found.
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-20 bg-gradient-to-b from-white to-blue-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,7 +89,7 @@ const TestimonialsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.slice(0, 3).map((testimonial, index) => (
             <Card key={testimonial.id} className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in" style={{animationDelay: `${index * 200}ms`}}>
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
@@ -62,7 +107,7 @@ const TestimonialsSection = () => {
                 
                 <div className="flex items-center">
                   <img 
-                    src={testimonial.image_url} 
+                    src={testimonial.image_url || '/placeholder.svg'} 
                     alt={testimonial.name}
                     className="w-12 h-12 rounded-full mr-4 bg-slate-200"
                   />

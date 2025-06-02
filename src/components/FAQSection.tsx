@@ -4,7 +4,11 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { useFAQs } from '../hooks/useFAQs';
 
 const FAQSection = () => {
-  const { data: faqs = [], isLoading } = useFAQs();
+  const { data: faqs = [], isLoading, error } = useFAQs();
+
+  console.log('FAQs data:', faqs);
+  console.log('FAQs loading:', isLoading);
+  console.log('FAQs error:', error);
 
   if (isLoading) {
     return (
@@ -25,6 +29,47 @@ const FAQSection = () => {
                 <div className="bg-gray-200 h-3 rounded w-3/4"></div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    console.error('FAQs error:', error);
+    return (
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Everything you need to know about buying and flying your new drone.
+            </p>
+          </div>
+          <div className="text-center text-red-600">
+            Error loading FAQs: {error.message}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!faqs || faqs.length === 0) {
+    return (
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Everything you need to know about buying and flying your new drone.
+            </p>
+          </div>
+          <div className="text-center text-slate-600">
+            No FAQs found.
           </div>
         </div>
       </section>

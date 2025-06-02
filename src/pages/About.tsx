@@ -80,7 +80,7 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-600">
             <div>
               <h3 className="font-medium mb-2">Email</h3>
-              <p>support@manificos.com</p>
+              <p>contact@manificos.com</p>
             </div>
             <div>
               <h3 className="font-medium mb-2">Phone</h3>

@@ -170,8 +170,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div>
               <h3 className="font-semibold mb-4">Contact</h3>
               <ul className="space-y-2 text-gray-400">
-                <li>Email: support@manificos.com</li>
-                <li>Phone: +44 20 1234 5678</li>
+                <li>Email: contact@manificos.com</li>
+                <li>Phone: +1 (208) 808-1919</li>
                 <li>Hours: Mon-Fri 9AM-6PM GMT</li>
               </ul>
             </div>

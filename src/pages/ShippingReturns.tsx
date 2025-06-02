@@ -122,7 +122,7 @@ const ShippingReturns = () => {
               <h3 className="font-semibold mb-2">Customer Support</h3>
               <ul className="space-y-2">
                 <li><strong>Email:</strong> contact@manificos.com</li>
-                <li><strong>Phone:</strong> +12088081919</li>
+                <li><strong>Phone:</strong> +1 (208) 808-1919</li>
                 <li><strong>Hours:</strong> 24/7 Support Available</li>
               </ul>
             </div>

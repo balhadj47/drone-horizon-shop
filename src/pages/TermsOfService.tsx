@@ -33,7 +33,7 @@ const TermsOfService = () => {
               <li><strong>Company Name:</strong> Manificos Ltd</li>
               <li><strong>Registration Number:</strong> 15909085</li>
               <li><strong>Registered Address:</strong> 71-75 Shelton Street, Covent Garden, London, United Kingdom, WC2H 9JQ</li>
-              <li><strong>Contact:</strong> contact@manificos.com | +12088081919</li>
+              <li><strong>Contact:</strong> contact@manificos.com | +1 (208) 808-1919</li>
             </ul>
           </section>
 
@@ -111,7 +111,7 @@ const TermsOfService = () => {
           <section className="mb-8">
             <h2 className="text-xl font-semibold mb-4">10. Contact Information</h2>
             <p>
-              For questions about these terms, contact us at contact@manificos.com or +12088081919. 
+              For questions about these terms, contact us at contact@manificos.com or +1 (208) 808-1919. 
               Our support is available 24/7.
             </p>
           </section>

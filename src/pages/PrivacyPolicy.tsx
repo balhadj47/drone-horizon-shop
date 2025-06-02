@@ -34,7 +34,7 @@ const PrivacyPolicy = () => {
               <li><strong>Registration Number:</strong> 15909085</li>
               <li><strong>Registered Address:</strong> 71-75 Shelton Street, Covent Garden, London, United Kingdom, WC2H 9JQ</li>
               <li><strong>Contact Email:</strong> contact@manificos.com</li>
-              <li><strong>Phone:</strong> +12088081919</li>
+              <li><strong>Phone:</strong> +1 (208) 808-1919</li>
             </ul>
           </section>
 
@@ -98,7 +98,7 @@ const PrivacyPolicy = () => {
             <h2 className="text-xl font-semibold mb-4">7. Contact Us</h2>
             <p>
               If you have any questions about this privacy policy, please contact us at contact@manificos.com 
-              or call +12088081919. Our support is available 24/7.
+              or call +1 (208) 808-1919. Our support is available 24/7.
             </p>
           </section>
         </CardContent>

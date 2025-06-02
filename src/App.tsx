@@ -1,5 +1,8 @@
+
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { CartProvider } from '@/contexts/CartContext';
+import { WishlistProvider } from '@/contexts/WishlistContext';
 import Layout from '@/components/Layout';
 import Index from '@/pages/Index';
 import Products from '@/pages/Products';
@@ -61,7 +64,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <CartProvider>
+      <WishlistProvider>
+        <RouterProvider router={router} />
+      </WishlistProvider>
+    </CartProvider>
+  );
 }
 
 export default App;

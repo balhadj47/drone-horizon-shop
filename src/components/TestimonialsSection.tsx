@@ -7,10 +7,6 @@ import { useTestimonials } from '../hooks/useTestimonials';
 const TestimonialsSection = () => {
   const { data: testimonials = [], isLoading, error } = useTestimonials();
 
-  console.log('Testimonials data:', testimonials);
-  console.log('Testimonials loading:', isLoading);
-  console.log('Testimonials error:', error);
-
   if (isLoading) {
     return (
       <section className="py-20 bg-gradient-to-b from-white to-blue-50">
@@ -36,7 +32,6 @@ const TestimonialsSection = () => {
   }
 
   if (error) {
-    console.error('Testimonials error:', error);
     return (
       <section className="py-20 bg-gradient-to-b from-white to-blue-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

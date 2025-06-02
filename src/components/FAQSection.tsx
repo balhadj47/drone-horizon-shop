@@ -6,10 +6,6 @@ import { useFAQs } from '../hooks/useFAQs';
 const FAQSection = () => {
   const { data: faqs = [], isLoading, error } = useFAQs();
 
-  console.log('FAQs data:', faqs);
-  console.log('FAQs loading:', isLoading);
-  console.log('FAQs error:', error);
-
   if (isLoading) {
     return (
       <section className="py-20 bg-white">
@@ -36,7 +32,6 @@ const FAQSection = () => {
   }
 
   if (error) {
-    console.error('FAQs error:', error);
     return (
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

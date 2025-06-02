@@ -16,6 +16,9 @@ import Success from '@/pages/Success';
 import Auth from '@/pages/Auth';
 import Account from '@/pages/Account';
 import About from '@/pages/About';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import TermsOfService from '@/pages/TermsOfService';
+import CookiePolicy from '@/pages/CookiePolicy';
 import NotFound from '@/pages/NotFound';
 
 // Create a client
@@ -61,6 +64,18 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <Layout><About /></Layout>,
+  },
+  {
+    path: "/privacy-policy",
+    element: <Layout><PrivacyPolicy /></Layout>,
+  },
+  {
+    path: "/terms-of-service",
+    element: <Layout><TermsOfService /></Layout>,
+  },
+  {
+    path: "/cookie-policy",
+    element: <Layout><CookiePolicy /></Layout>,
   },
   {
     path: "*",

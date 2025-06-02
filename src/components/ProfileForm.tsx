@@ -20,11 +20,36 @@ interface ProfileFormProps {
 }
 
 const ProfileForm = ({ profile, onUpdate }: ProfileFormProps) => {
+  // Parse existing address or use empty values
+  const parseAddress = (address: string | null) => {
+    if (!address) return { street: '', city: '', state: '', postalCode: '', country: '' };
+    
+    try {
+      const parsed = JSON.parse(address);
+      return {
+        street: parsed.street || '',
+        city: parsed.city || '',
+        state: parsed.state || '',
+        postalCode: parsed.postalCode || '',
+        country: parsed.country || ''
+      };
+    } catch {
+      // If not JSON, treat as legacy single address string
+      return { street: address, city: '', state: '', postalCode: '', country: '' };
+    }
+  };
+
+  const addressData = parseAddress(profile.address);
+
   const [formData, setFormData] = useState({
     full_name: profile.full_name || '',
     email: profile.email || '',
-    address: profile.address || '',
     phone: profile.phone || '',
+    street: addressData.street,
+    city: addressData.city,
+    state: addressData.state,
+    postalCode: addressData.postalCode,
+    country: addressData.country,
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,7 +58,23 @@ const ProfileForm = ({ profile, onUpdate }: ProfileFormProps) => {
     setIsLoading(true);
 
     try {
-      await onUpdate(formData);
+      // Combine address fields into a structured JSON string
+      const addressObject = {
+        street: formData.street,
+        city: formData.city,
+        state: formData.state,
+        postalCode: formData.postalCode,
+        country: formData.country
+      };
+
+      const updates = {
+        full_name: formData.full_name,
+        email: formData.email,
+        phone: formData.phone,
+        address: JSON.stringify(addressObject)
+      };
+
+      await onUpdate(updates);
     } finally {
       setIsLoading(false);
     }
@@ -81,14 +122,62 @@ const ProfileForm = ({ profile, onUpdate }: ProfileFormProps) => {
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="address">Address</Label>
-            <Input
-              id="address"
-              value={formData.address}
-              onChange={(e) => handleChange('address', e.target.value)}
-              placeholder="Enter your address"
-            />
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium">Address</h3>
+            
+            <div className="space-y-2">
+              <Label htmlFor="street">Street Address</Label>
+              <Input
+                id="street"
+                value={formData.street}
+                onChange={(e) => handleChange('street', e.target.value)}
+                placeholder="Enter your street address"
+              />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="city">City</Label>
+                <Input
+                  id="city"
+                  value={formData.city}
+                  onChange={(e) => handleChange('city', e.target.value)}
+                  placeholder="Enter your city"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="state">State/Province</Label>
+                <Input
+                  id="state"
+                  value={formData.state}
+                  onChange={(e) => handleChange('state', e.target.value)}
+                  placeholder="Enter your state or province"
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="postalCode">Postal Code</Label>
+                <Input
+                  id="postalCode"
+                  value={formData.postalCode}
+                  onChange={(e) => handleChange('postalCode', e.target.value)}
+                  placeholder="Enter your postal code"
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="country">Country</Label>
+                <Input
+                  id="country"
+                  value={formData.country}
+                  onChange={(e) => handleChange('country', e.target.value)}
+                  placeholder="Enter your country"
+                />
+              </div>
+            </div>
           </div>
           
           <Button type="submit" className="w-full" disabled={isLoading}>

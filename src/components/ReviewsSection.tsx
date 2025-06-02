@@ -62,6 +62,7 @@ const ReviewsSection = ({ productId }: ReviewsSectionProps) => {
         {displayedReviews.map((review) => (
           <ReviewCard key={review.id} review={{
             id: review.id,
+            productId: review.product_id,
             userName: review.user_name,
             rating: review.rating,
             comment: review.comment,

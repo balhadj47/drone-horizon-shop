@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Shield, Truck, Zap, CheckCircle } from 'lucide-react';
@@ -6,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useProducts } from '../hooks/useProducts';
 import TestimonialsSection from '../components/TestimonialsSection';
-import NewsletterSection from '../components/NewsletterSection';
 import TrustBadgesSection from '../components/TrustBadgesSection';
 import FAQSection from '../components/FAQSection';
 import DroneFinderQuiz from '../components/DroneFinderQuiz';
@@ -209,9 +207,6 @@ const Index = () => {
 
       {/* FAQ Section */}
       <FAQSection />
-
-      {/* Newsletter Signup */}
-      <NewsletterSection />
 
       {/* Call to Action Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white relative overflow-hidden">

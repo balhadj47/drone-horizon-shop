@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAuth } from '../hooks/useAuth';
 import { useProfile } from '../hooks/useProfile';
 import PaymentInfo from './PaymentInfo';
@@ -71,6 +72,13 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
     });
   };
 
+  const handleCountryChange = (value: string) => {
+    setFormData({
+      ...formData,
+      country: value,
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
@@ -78,6 +86,38 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
 
   // Check if user has complete profile data
   const hasCompleteProfile = user && profile && profile.full_name && profile.email && profile.address;
+
+  const countries = [
+    { value: 'Canada', label: 'Canada' },
+    { value: 'United States', label: 'United States' },
+    { value: 'Austria', label: 'Austria' },
+    { value: 'Belgium', label: 'Belgium' },
+    { value: 'Bulgaria', label: 'Bulgaria' },
+    { value: 'Croatia', label: 'Croatia' },
+    { value: 'Cyprus', label: 'Cyprus' },
+    { value: 'Czech Republic', label: 'Czech Republic' },
+    { value: 'Denmark', label: 'Denmark' },
+    { value: 'Estonia', label: 'Estonia' },
+    { value: 'Finland', label: 'Finland' },
+    { value: 'France', label: 'France' },
+    { value: 'Germany', label: 'Germany' },
+    { value: 'Greece', label: 'Greece' },
+    { value: 'Hungary', label: 'Hungary' },
+    { value: 'Ireland', label: 'Ireland' },
+    { value: 'Italy', label: 'Italy' },
+    { value: 'Latvia', label: 'Latvia' },
+    { value: 'Lithuania', label: 'Lithuania' },
+    { value: 'Luxembourg', label: 'Luxembourg' },
+    { value: 'Malta', label: 'Malta' },
+    { value: 'Netherlands', label: 'Netherlands' },
+    { value: 'Poland', label: 'Poland' },
+    { value: 'Portugal', label: 'Portugal' },
+    { value: 'Romania', label: 'Romania' },
+    { value: 'Slovakia', label: 'Slovakia' },
+    { value: 'Slovenia', label: 'Slovenia' },
+    { value: 'Spain', label: 'Spain' },
+    { value: 'Sweden', label: 'Sweden' },
+  ];
 
   return (
     <Card>
@@ -198,16 +238,28 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
               </div>
               <div>
                 <Label htmlFor="country">Country</Label>
-                <Input
-                  id="country"
-                  name="country"
-                  placeholder="United Kingdom"
-                  required
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  readOnly={hasCompleteProfile}
-                  className={hasCompleteProfile ? 'bg-gray-50' : ''}
-                />
+                {hasCompleteProfile ? (
+                  <Input
+                    id="country"
+                    name="country"
+                    value={formData.country}
+                    readOnly
+                    className="bg-gray-50"
+                  />
+                ) : (
+                  <Select value={formData.country} onValueChange={handleCountryChange} required>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select country" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {countries.map((country) => (
+                        <SelectItem key={country.value} value={country.value}>
+                          {country.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
               </div>
             </div>
           </div>

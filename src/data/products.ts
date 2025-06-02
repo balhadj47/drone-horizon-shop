@@ -7,7 +7,7 @@ export const products: Product[] = [
     id: "1",
     name: "DJI Mini 4 Pro",
     price: 759,
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Mini-4-Pro.png",
     category: "Consumer Drones",
     description: "Compact drone with 4K camera, obstacle avoidance sensors, and weighs under 249g for easy travel and no registration required in most countries.",
     specs: {
@@ -22,7 +22,7 @@ export const products: Product[] = [
     id: "2",
     name: "DJI Air 3",
     price: 1059,
-    image: "https://images.unsplash.com/photo-1487887235947-a955ef187fcc?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-air-3.png",
     category: "Consumer Drones",
     description: "Dual-camera drone with Medium Tele and Wide-Angle cameras, 46-minute flight time, and advanced subject tracking capabilities.",
     specs: {
@@ -37,7 +37,7 @@ export const products: Product[] = [
     id: "3",
     name: "Autel EVO Nano+",
     price: 649,
-    image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/EVO-Nano-Series.png",
     category: "Consumer Drones",
     description: "Affordable compact drone with 50MP camera, obstacle sensors, and intelligent flight modes perfect for hobbyists and casual users.",
     specs: {
@@ -54,7 +54,7 @@ export const products: Product[] = [
     id: "4",
     name: "DJI Mavic 3 Pro",
     price: 1499,
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Mavic-3-Pro.png",
     category: "Professional Drones",
     description: "Triple camera system including telephoto lens, Hasselblad main camera, and 43-minute flight time for professional cinematography and surveying.",
     specs: {
@@ -69,7 +69,7 @@ export const products: Product[] = [
     id: "5",
     name: "Autel EVO II Pro V3",
     price: 1299,
-    image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/EVO-II-Pro-V3.png",
     category: "Professional Drones",
     description: "Professional drone with 6K camera, long-range transmission capabilities, and advanced flight performance for industrial applications.",
     specs: {
@@ -84,7 +84,7 @@ export const products: Product[] = [
     id: "6",
     name: "DJI Inspire 3",
     price: 11249,
-    image: "https://images.unsplash.com/photo-1487887235947-a955ef187fcc?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Inspire-3.png",
     category: "Professional Drones",
     description: "Cinema-level drone with full-frame 8K camera, RTK positioning, and professional cinematography features for Hollywood productions.",
     specs: {
@@ -101,7 +101,7 @@ export const products: Product[] = [
     id: "7",
     name: "DJI Avata 2",
     price: 989,
-    image: "https://images.unsplash.com/photo-1546776230-bb5f6139ff0a?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Avata-2.png",
     category: "FPV & Racing Drones",
     description: "Built-in propeller guards, 4K stabilized camera, and compatibility with Goggles 3 for immersive FPV flying experience.",
     specs: {
@@ -116,7 +116,7 @@ export const products: Product[] = [
     id: "8",
     name: "iFlight Nazgul Evoque F5",
     price: 289,
-    image: "https://images.unsplash.com/photo-1508614732287-89596d3d129a?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/Nazgul-Evoque-F5-V2-O3",
     category: "FPV & Racing Drones",
     description: "Bind-and-fly racing quadcopter with top-tier performance, carbon fiber frame, and optimized for competitive FPV racing.",
     specs: {
@@ -133,7 +133,7 @@ export const products: Product[] = [
     id: "9",
     name: "DJI RC 2 Controller",
     price: 299,
-    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-RC-2.png",
     category: "Accessories",
     description: "Advanced remote controller with built-in screen, enhanced transmission range, and compatibility with multiple DJI drone models.",
     specs: {
@@ -148,7 +148,7 @@ export const products: Product[] = [
     id: "10",
     name: "ND Filter Kit - Mini 4 Pro",
     price: 89,
-    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Mini-4-Pro-ND-Filter.jpg",
     category: "Accessories",
     description: "Professional ND filter set for DJI Mini 4 Pro including ND4, ND8, ND16, and ND32 filters for perfect exposure control.",
     specs: {
@@ -163,7 +163,7 @@ export const products: Product[] = [
     id: "11",
     name: "ND Filter Kit - Mavic 3",
     price: 149,
-    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Mavic-3-Pro-ND-Filter.jpg",
     category: "Accessories",
     description: "Professional ND filter collection for DJI Mavic 3 series including multiple density options for cinematic footage.",
     specs: {
@@ -178,7 +178,7 @@ export const products: Product[] = [
     id: "12",
     name: "ND Filter Kit - Avata",
     price: 69,
-    image: "https://images.unsplash.com/photo-1521405924368-64c5b84bec60?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Avata-2-ND-Filter.jpg",
     category: "Accessories",
     description: "Specialized ND filter kit for DJI Avata FPV drone to enhance video quality during high-speed flights.",
     specs: {
@@ -193,7 +193,7 @@ export const products: Product[] = [
     id: "13",
     name: "Fly More Kit - Mini 4 Pro",
     price: 329,
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Mini-4-Pro.png",
     category: "Accessories",
     description: "Complete accessory bundle with extra batteries, charging hub, carrying case, and propellers for extended flight sessions.",
     specs: {
@@ -208,7 +208,7 @@ export const products: Product[] = [
     id: "14",
     name: "Fly More Kit - Mavic 3",
     price: 549,
-    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Mavic-3-Series-Fly-More-Kit.jpg",
     category: "Accessories",
     description: "Professional accessory package including multiple batteries, charger hub, ND filters, and protective case for Mavic 3 series.",
     specs: {
@@ -223,7 +223,7 @@ export const products: Product[] = [
     id: "15",
     name: "DJI Goggles 3",
     price: 799,
-    image: "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=500&h=500&fit=crop",
+    image: "https://hgauoosxacrbshfwtill.supabase.co/storage/v1/object/public/product-images/DJI-Goggles-3.png",
     category: "Accessories",
     description: "Latest FPV goggles with micro-OLED screens, head tracking, and ultra-low latency for immersive drone flying experience.",
     specs: {

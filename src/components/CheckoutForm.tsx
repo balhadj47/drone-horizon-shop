@@ -1,9 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '../hooks/useAuth';
+import { useProfile } from '../hooks/useProfile';
 import PaymentInfo from './PaymentInfo';
 
 interface CheckoutFormProps {
@@ -14,14 +16,53 @@ interface CheckoutFormProps {
 }
 
 const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: CheckoutFormProps) => {
-  const [isGuest, setIsGuest] = useState(true);
+  const { user } = useAuth();
+  const { profile } = useProfile();
+  const [isGuest, setIsGuest] = useState(!user);
+  
+  // Parse address from profile if available
+  const parseAddress = (address: string | null) => {
+    if (!address) return { street: '', city: '', state: '', postalCode: '', country: '' };
+    
+    try {
+      const parsed = JSON.parse(address);
+      return {
+        street: parsed.street || '',
+        city: parsed.city || '',
+        state: parsed.state || '',
+        postalCode: parsed.postalCode || '',
+        country: parsed.country || ''
+      };
+    } catch {
+      return { street: address, city: '', state: '', postalCode: '', country: '' };
+    }
+  };
+
   const [formData, setFormData] = useState({
     email: '',
     name: '',
-    address: '',
+    street: '',
     city: '',
-    zipCode: '',
+    state: '',
+    postalCode: '',
+    country: '',
   });
+
+  // Pre-fill form data when profile loads
+  useEffect(() => {
+    if (profile) {
+      const addressData = parseAddress(profile.address);
+      setFormData({
+        email: profile.email || '',
+        name: profile.full_name || '',
+        street: addressData.street,
+        city: addressData.city,
+        state: addressData.state,
+        postalCode: addressData.postalCode,
+        country: addressData.country,
+      });
+    }
+  }, [profile]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -39,22 +80,24 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
     <Card>
       <CardHeader>
         <CardTitle>Delivery Details</CardTitle>
-        <div className="flex gap-4 text-sm">
-          <button
-            type="button"
-            onClick={() => setIsGuest(true)}
-            className={`px-3 py-1 rounded ${isGuest ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
-          >
-            Guest Checkout
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsGuest(false)}
-            className={`px-3 py-1 rounded ${!isGuest ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
-          >
-            Create Account
-          </button>
-        </div>
+        {!user && (
+          <div className="flex gap-4 text-sm">
+            <button
+              type="button"
+              onClick={() => setIsGuest(true)}
+              className={`px-3 py-1 rounded ${isGuest ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+            >
+              Guest Checkout
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsGuest(false)}
+              className={`px-3 py-1 rounded ${!isGuest ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+            >
+              Create Account
+            </button>
+          </div>
+        )}
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -83,44 +126,73 @@ const CheckoutForm = ({ isProcessing, onSubmit, shippingCost, finalTotal }: Chec
             />
           </div>
 
-          <div>
-            <Label htmlFor="address">Address</Label>
-            <Input
-              id="address"
-              name="address"
-              placeholder="123 Main Street"
-              required
-              value={formData.address}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium">Shipping Address</h3>
+            
             <div>
-              <Label htmlFor="city">City</Label>
+              <Label htmlFor="street">Street Address</Label>
               <Input
-                id="city"
-                name="city"
-                placeholder="London"
+                id="street"
+                name="street"
+                placeholder="123 Main Street"
                 required
-                value={formData.city}
+                value={formData.street}
                 onChange={handleInputChange}
               />
             </div>
-            <div>
-              <Label htmlFor="zipCode">Postcode</Label>
-              <Input
-                id="zipCode"
-                name="zipCode"
-                placeholder="SW1A 1AA"
-                required
-                value={formData.zipCode}
-                onChange={handleInputChange}
-              />
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="city">City</Label>
+                <Input
+                  id="city"
+                  name="city"
+                  placeholder="London"
+                  required
+                  value={formData.city}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <Label htmlFor="state">State/Province</Label>
+                <Input
+                  id="state"
+                  name="state"
+                  placeholder="England"
+                  required
+                  value={formData.state}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="postalCode">Postal Code</Label>
+                <Input
+                  id="postalCode"
+                  name="postalCode"
+                  placeholder="SW1A 1AA"
+                  required
+                  value={formData.postalCode}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div>
+                <Label htmlFor="country">Country</Label>
+                <Input
+                  id="country"
+                  name="country"
+                  placeholder="United Kingdom"
+                  required
+                  value={formData.country}
+                  onChange={handleInputChange}
+                />
+              </div>
             </div>
           </div>
 
-          {!isGuest && (
+          {!user && !isGuest && (
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="password">Password</Label>
